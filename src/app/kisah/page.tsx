@@ -10,13 +10,26 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function KisahPage() {
+type PageProps = {
+  searchParams: Promise<{
+    q?: string;
+    category?: string;
+    tag?: string;
+    page?: string;
+  }>;
+};
+
+export default async function KisahPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+
   return (
     <ListingPage
+      basePath="/kisah"
       eyebrow="Kisah"
       title="Kisah Inspiratif dan Hikmah"
       description="Kumpulan kisah Islami, sirah, pengalaman dakwah, dan hikmah kehidupan yang menguatkan iman."
       posts={await getPublicPostsByType("story")}
+      searchParams={params}
     />
   );
 }

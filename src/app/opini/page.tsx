@@ -10,13 +10,26 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function OpiniPage() {
+type PageProps = {
+  searchParams: Promise<{
+    q?: string;
+    category?: string;
+    tag?: string;
+    page?: string;
+  }>;
+};
+
+export default async function OpiniPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+
   return (
     <ListingPage
+      basePath="/opini"
       eyebrow="Opini"
       title="Opini Keumatan dan Sosial"
       description="Tulisan opini tentang isu umat, sosial, dakwah, pendidikan, dan kehidupan muslim masa kini."
       posts={await getPublicPostsByType("opinion")}
+      searchParams={params}
     />
   );
 }

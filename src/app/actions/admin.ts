@@ -335,12 +335,21 @@ export async function updateAccountAction(formData: FormData) {
   const { user } = await requireAdminUser();
   const supabase = createAdminClient();
   const password = stringValue(formData, "password");
+  let avatarUpload: Awaited<ReturnType<typeof uploadImageFromForm>> | null = null;
+
+  try {
+    avatarUpload = await uploadImageFromForm(formData, "avatar", "avatars", "profiles", user.id);
+  } catch (error) {
+    throw new Error(errorMessage(error));
+  }
 
   const { error } = await mutableTable(supabase, "profiles")
     .update({
       username: stringValue(formData, "username"),
       display_name: stringValue(formData, "display_name"),
       bio: stringValue(formData, "bio"),
+      avatar_path: avatarUpload?.path ?? stringValue(formData, "existing_avatar_path"),
+      avatar_url: avatarUpload?.publicUrl ?? stringValue(formData, "existing_avatar_url"),
     })
     .eq("id", user.id);
 
@@ -353,4 +362,56 @@ export async function updateAccountAction(formData: FormData) {
   }
 
   revalidatePath("/admin/settings/account");
+}
+
+function siteSettingsPayload(
+  formData: FormData,
+  logoUpload: Awaited<ReturnType<typeof uploadImageFromForm>> | null,
+  faviconUpload: Awaited<ReturnType<typeof uploadImageFromForm>> | null,
+) {
+  return {
+    site_name: stringValue(formData, "site_name") ?? "Blog Dai Islami",
+    site_tagline: stringValue(formData, "site_tagline"),
+    site_description: stringValue(formData, "site_description"),
+    logo_path: logoUpload?.path ?? stringValue(formData, "existing_logo_path"),
+    logo_url: logoUpload?.publicUrl ?? stringValue(formData, "existing_logo_url"),
+    favicon_path: faviconUpload?.path ?? stringValue(formData, "existing_favicon_path"),
+    favicon_url: faviconUpload?.publicUrl ?? stringValue(formData, "existing_favicon_url"),
+    primary_color: stringValue(formData, "primary_color") ?? "#14B8A6",
+    contact_email: stringValue(formData, "contact_email"),
+    contact_phone: stringValue(formData, "contact_phone"),
+    whatsapp_url: stringValue(formData, "whatsapp_url"),
+    instagram_url: stringValue(formData, "instagram_url"),
+    facebook_url: stringValue(formData, "facebook_url"),
+    youtube_url: stringValue(formData, "youtube_url"),
+    tiktok_url: stringValue(formData, "tiktok_url"),
+    address: stringValue(formData, "address"),
+  };
+}
+
+export async function saveSiteSettingsAction(formData: FormData) {
+  const { user } = await requireAdminUser();
+  const supabase = createAdminClient();
+  const id = stringValue(formData, "id");
+  let logoUpload: Awaited<ReturnType<typeof uploadImageFromForm>> | null = null;
+  let faviconUpload: Awaited<ReturnType<typeof uploadImageFromForm>> | null = null;
+
+  try {
+    logoUpload = await uploadImageFromForm(formData, "logo", "blog-images", "site", user.id);
+    faviconUpload = await uploadImageFromForm(formData, "favicon", "blog-images", "site", user.id);
+  } catch (error) {
+    throw new Error(errorMessage(error));
+  }
+
+  const payload = siteSettingsPayload(formData, logoUpload, faviconUpload);
+
+  const { error } = id
+    ? await mutableTable(supabase, "site_settings").update(payload).eq("id", id)
+    : await mutableTable(supabase, "site_settings").insert(payload);
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/settings/site");
+  revalidatePath("/");
+  revalidatePath("/profil");
 }

@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/server";
 import { books as dummyBooks, posts as dummyPosts } from "@/lib/dummy-content";
 import { bookStatuses, contentTypes, publicationStatuses, readingTime, slugify } from "@/lib/content-options";
+import { fallbackSiteSettings, type SiteSettings } from "@/lib/site-settings";
 import type { Database } from "@/types/database";
 
 export type Category = Database["public"]["Tables"]["categories"]["Row"];
@@ -11,6 +12,7 @@ export type Post = Database["public"]["Tables"]["posts"]["Row"] & {
 };
 export type Book = Database["public"]["Tables"]["books"]["Row"];
 export type MediaAsset = Database["public"]["Tables"]["media_assets"]["Row"];
+export type SiteSettingsRow = SiteSettings;
 
 export { bookStatuses, contentTypes, publicationStatuses, readingTime, slugify };
 
@@ -156,4 +158,13 @@ export async function getMediaAssets() {
   if (!error && data) return data;
 
   return [] as MediaAsset[];
+}
+
+export async function getSiteSettings() {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase.from("site_settings").select("*").order("created_at", { ascending: false }).limit(1).maybeSingle();
+
+  if (!error && data) return data as SiteSettingsRow;
+
+  return fallbackSiteSettings();
 }

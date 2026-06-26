@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 
-import { BookOpen, ChevronsLeft, ChevronsRight, FolderOpen, Gauge, ImageIcon, LogOut, Menu, Newspaper, Tags, X } from "lucide-react";
+import { BookOpen, ChevronsLeft, ChevronsRight, FolderOpen, Gauge, ImageIcon, LogOut, Menu, Newspaper, Settings, Tags, UserCog, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -29,6 +29,8 @@ const navItems = [
   { href: "/admin/categories", label: "Kategori", icon: FolderOpen },
   { href: "/admin/tags", label: "Tag", icon: Tags },
   { href: "/admin/media", label: "Media", icon: ImageIcon },
+  { href: "/admin/settings/site", label: "Site Settings", icon: Settings },
+  { href: "/admin/settings/account", label: "Account", icon: UserCog },
 ];
 
 export function AdminShellClient({ children, profile, logoutAction }: AdminShellClientProps) {
@@ -104,19 +106,6 @@ export function AdminShellClient({ children, profile, logoutAction }: AdminShell
             </Button>
           </div>
 
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className={cn("mt-6 gap-2", !sidebarExpanded && "size-10 self-center px-0")}
-            aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
-            aria-expanded={expanded}
-            onClick={() => setExpanded((value) => !value)}
-          >
-            {expanded ? <ChevronsLeft className="size-4" aria-hidden="true" /> : <ChevronsRight className="size-4" aria-hidden="true" />}
-            <span className={cn(!sidebarExpanded && "sr-only")}>{expanded ? "Collapse" : "Expand"}</span>
-          </Button>
-
           <nav className="mt-6 grid gap-1">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -155,31 +144,32 @@ export function AdminShellClient({ children, profile, logoutAction }: AdminShell
       <div className={cn("min-w-0 transition-[padding] duration-200", expanded ? "xl:pl-64 md:pl-64" : "md:pl-20")}>
         <header className="sticky top-0 z-20 border-b border-border bg-white/90 px-4 py-3 backdrop-blur sm:px-5">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="size-10 rounded-full px-0 md:hidden"
-              aria-label="Buka sidebar"
-              onClick={() => setMobileOpen(true)}
-            >
-              <Menu className="size-4" aria-hidden="true" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="size-10 rounded-full px-0 md:hidden"
+                aria-label="Buka sidebar"
+                onClick={() => setMobileOpen(true)}
+              >
+                <Menu className="size-4" aria-hidden="true" />
+              </Button>
 
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="hidden gap-2 md:inline-flex"
-              aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
-              aria-expanded={expanded}
-              onClick={() => setExpanded((value) => !value)}
-            >
-              {expanded ? <ChevronsLeft className="size-4" aria-hidden="true" /> : <ChevronsRight className="size-4" aria-hidden="true" />}
-              <span>{expanded ? "Collapse" : "Expand"}</span>
-            </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="hidden size-10 rounded-full px-0 md:inline-flex"
+                aria-label={expanded ? "Collapse sidebar" : "Expand sidebar"}
+                aria-expanded={expanded}
+                onClick={() => setExpanded((value) => !value)}
+              >
+                {expanded ? <ChevronsLeft className="size-4" aria-hidden="true" /> : <ChevronsRight className="size-4" aria-hidden="true" />}
+              </Button>
+            </div>
 
-            <div className="ml-auto min-w-0 text-right text-sm">
+            <div className="min-w-0 text-right text-sm">
               <p className="truncate font-medium">{profileName}</p>
               <p className="text-muted-foreground">{profile.role}</p>
             </div>

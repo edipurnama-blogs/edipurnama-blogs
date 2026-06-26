@@ -10,13 +10,26 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function KajianPage() {
+type PageProps = {
+  searchParams: Promise<{
+    q?: string;
+    category?: string;
+    tag?: string;
+    page?: string;
+  }>;
+};
+
+export default async function KajianPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+
   return (
     <ListingPage
+      basePath="/kajian"
       eyebrow="Kajian"
       title="Kajian dan Tausiyah Pilihan"
       description="Ringkasan nasihat, materi kajian, dan catatan ceramah untuk dibaca ulang dengan nyaman."
       posts={await getPublicPostsByType("tausiyah")}
+      searchParams={params}
     />
   );
 }

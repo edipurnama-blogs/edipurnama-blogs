@@ -13,15 +13,16 @@ import { Card } from "@/components/ui/card";
 import {
   profile,
   quote,
-  site,
   type Post,
 } from "@/lib/dummy-content";
+import { getSiteSettings } from "@/lib/admin-data";
 import { getPublicBooks, getPublicFeaturedPosts, getPublicPosts, getPublicPostsByType } from "@/lib/public-data";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [latestPosts, featuredPosts, dailyBlogs, articles, news, books] = await Promise.all([
+  const [site, latestPosts, featuredPosts, dailyBlogs, articles, news, books] = await Promise.all([
+    getSiteSettings(),
     getPublicPosts(),
     getPublicFeaturedPosts(3),
     getPublicPostsByType("daily_blog"),
@@ -39,9 +40,9 @@ export default async function Home() {
               <Badge className="w-fit">Website Blog Dai Islami</Badge>
               <div className="max-w-3xl space-y-5">
                 <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-6xl">
-                  {site.name}
+                  {site.site_name}
                 </h1>
-                <p className="text-xl leading-9 text-muted-foreground">{site.tagline}</p>
+                <p className="text-xl leading-9 text-muted-foreground">{site.site_tagline ?? site.site_description}</p>
               </div>
               <div className="flex flex-wrap gap-3">
                 <Button asChild size="lg">
