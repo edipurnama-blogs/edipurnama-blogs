@@ -28,6 +28,12 @@ export type Post = {
   coverImageAlt: string;
   tags: string[];
   content: string[];
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  ogTitle?: string | null;
+  ogDescription?: string | null;
+  ogImageUrl?: string | null;
+  canonicalUrl?: string | null;
 };
 
 export type Book = {
@@ -43,6 +49,8 @@ export type Book = {
   status: BookStatus;
   purchaseUrl: string | null;
   sampleFileUrl: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
 };
 
 export const site = publicContent.site;

@@ -11,30 +11,34 @@ import {
   contentTypeLabel,
   contentTypePath,
   formatDate,
-  getPostBySlug,
-  getRelatedPosts,
   type ContentType,
 } from "@/lib/dummy-content";
+import { getPublicPostBySlug, getPublicRelatedPosts } from "@/lib/public-data";
+import { postJsonLd } from "@/lib/seo";
 
 type ContentDetailPageProps = {
   contentType: ContentType;
   slug: string;
 };
 
-export function ContentDetailPage({ contentType, slug }: ContentDetailPageProps) {
-  const post = getPostBySlug(contentType, slug);
+export async function ContentDetailPage({ contentType, slug }: ContentDetailPageProps) {
+  const post = await getPublicPostBySlug(contentType, slug);
 
   if (!post) {
     notFound();
   }
 
-  const relatedPosts = getRelatedPosts(post);
+  const relatedPosts = await getPublicRelatedPosts(post);
   const backHref = `/${contentTypePath(post.contentType)}`;
 
   return (
     <PublicShell>
       <main className="bg-white">
         <article>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(postJsonLd(post)) }}
+          />
           <header className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
             <Link href={backHref} className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-primary">
               <ArrowLeft className="size-4" aria-hidden="true" />
@@ -49,7 +53,7 @@ export function ContentDetailPage({ contentType, slug }: ContentDetailPageProps)
                   </Badge>
                 ))}
               </div>
-              <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">{post.title}</h1>
+              <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">{post.title}</h1>
               <p className="text-lg leading-8 text-muted-foreground">{post.excerpt}</p>
               <div className="flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
                 <span>{post.authorName}</span>
@@ -77,7 +81,7 @@ export function ContentDetailPage({ contentType, slug }: ContentDetailPageProps)
             </div>
           </div>
 
-          <div className="mx-auto grid w-full max-w-5xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_220px] lg:px-8">
+          <div className="mx-auto grid w-full max-w-5xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_220px] lg:px-8">
             <div className="prose-content">
               {post.content.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>

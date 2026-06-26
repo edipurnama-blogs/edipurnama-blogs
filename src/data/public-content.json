@@ -6,28 +6,47 @@
     "email": "kontak@edipurnama.id",
     "phone": "+62 812-0000-2026",
     "socials": [
-      { "label": "Instagram", "url": "https://instagram.com/" },
-      { "label": "YouTube", "url": "https://youtube.com/" },
-      { "label": "WhatsApp", "url": "https://wa.me/6281200002026" }
+      {
+        "label": "Instagram",
+        "url": "https://instagram.com/"
+      },
+      {
+        "label": "YouTube",
+        "url": "https://youtube.com/"
+      },
+      {
+        "label": "WhatsApp",
+        "url": "https://wa.me/6281200002026"
+      }
     ]
   },
   "profile": {
-    "name": "Ustadz Edi Purnama",
+    "name": "Edi Purnama",
     "shortBio": "Dai, penulis, dan pembina kajian remaja yang berfokus pada akhlak, keluarga muslim, dan literasi dakwah digital.",
-    "longBio": "Ustadz Edi Purnama aktif berdakwah melalui kajian masjid, kelas remaja, tulisan reflektif, dan pendampingan komunitas. Ia menulis dengan bahasa yang tenang, dekat dengan kehidupan sehari-hari, serta berusaha menghubungkan nilai Al-Qur'an dan Sunnah dengan persoalan keluarga, pendidikan, dan sosial umat.",
+    "longBio": "Edi Purnama aktif berdakwah melalui kajian masjid, kelas remaja, tulisan reflektif, dan pendampingan komunitas. Ia menulis dengan bahasa yang tenang, dekat dengan kehidupan sehari-hari, serta berusaha menghubungkan nilai Al-Qur'an dan Sunnah dengan persoalan keluarga, pendidikan, dan sosial umat.",
     "education": [
       "Pendidikan pesantren dan kajian kitab dasar",
       "Studi dakwah dan komunikasi Islam",
       "Pelatihan pendampingan remaja dan keluarga muslim"
     ],
-    "focus": ["Akhlak", "Keluarga Muslim", "Dakwah Remaja", "Literasi Islam", "Kajian Masjid"],
+    "focus": [
+      "Akhlak",
+      "Keluarga Muslim",
+      "Dakwah Remaja",
+      "Literasi Islam",
+      "Kajian Masjid"
+    ],
     "activities": [
       "Mengisi kajian rutin pekanan",
       "Membina komunitas remaja masjid",
       "Menulis artikel dan refleksi dakwah",
       "Menyusun materi khutbah dan tausiyah"
     ],
-    "mainWorks": ["Menata Hati di Tengah Riuh", "Dakwah yang Mendekatkan", "Rumah yang Menumbuhkan Iman"],
+    "mainWorks": [
+      "Menata Hati di Tengah Riuh",
+      "Dakwah yang Mendekatkan",
+      "Rumah yang Menumbuhkan Iman"
+    ],
     "avatarUrl": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=900&q=80",
     "heroImageUrl": "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1600&q=80"
   },
@@ -46,7 +65,11 @@
       "isFeatured": true,
       "coverImageUrl": "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=1400&q=80",
       "coverImageAlt": "Cahaya matahari pagi di jalan yang tenang",
-      "tags": ["Dakwah", "Motivasi Islam", "Akhlak"],
+      "tags": [
+        "Dakwah",
+        "Motivasi Islam",
+        "Akhlak"
+      ],
       "content": [
         "Pagi sering kali datang bersama daftar pekerjaan yang panjang. Sebelum semua itu mengambil ruang di kepala, seorang muslim perlu berhenti sejenak untuk bertanya: untuk siapa hari ini dijalani?",
         "Niat bukan kalimat formal yang sekadar diucapkan. Niat adalah arah batin. Ia membuat pekerjaan sederhana, seperti membantu keluarga, belajar, berdagang, atau melayani masyarakat, menjadi bagian dari ketaatan kepada Allah.",
@@ -68,7 +91,10 @@
       "isFeatured": true,
       "coverImageUrl": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
       "coverImageAlt": "Pemandangan alam yang lapang dan tenang",
-      "tags": ["Akhlak", "Motivasi Islam"],
+      "tags": [
+        "Akhlak",
+        "Motivasi Islam"
+      ],
       "content": [
         "Sabar dalam Islam memiliki makna yang luas. Ia mencakup kesungguhan untuk tetap menjalankan perintah Allah, menahan diri dari maksiat, dan menerima takdir yang berat tanpa kehilangan adab.",
         "Banyak orang mengira sabar berarti diam dan menyerah. Padahal sabar justru menuntut kekuatan. Seorang yang sabar tetap mencari solusi, memperbaiki diri, dan mengambil sebab yang halal.",
@@ -90,7 +116,11 @@
       "isFeatured": true,
       "coverImageUrl": "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?auto=format&fit=crop&w=1400&q=80",
       "coverImageAlt": "Masjid saat senja",
-      "tags": ["Berita Umat", "Remaja Muslim", "Dakwah"],
+      "tags": [
+        "Berita Umat",
+        "Remaja Muslim",
+        "Dakwah"
+      ],
       "content": [
         "Remaja Masjid Al-Ikhlas menyelenggarakan rangkaian kegiatan dakwah Ramadhan yang melibatkan pelajar, mahasiswa, dan warga sekitar. Program ini dirancang agar anak muda memiliki ruang berkhidmat sekaligus belajar mengelola kegiatan umat.",
         "Kegiatan dimulai dengan kajian ba'da Ashar, dilanjutkan pembagian takjil, buka puasa bersama, dan penggalangan paket sembako. Panitia juga mengadakan kelas singkat tentang adab bermedia sosial selama Ramadhan.",
@@ -112,7 +142,10 @@
       "isFeatured": false,
       "coverImageUrl": "https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1400&q=80",
       "coverImageAlt": "Meja kerja dengan buku dan perangkat digital",
-      "tags": ["Dakwah", "Akhlak"],
+      "tags": [
+        "Dakwah",
+        "Akhlak"
+      ],
       "content": [
         "Ruang digital membuat percakapan menjadi cepat, tetapi tidak selalu membuatnya menjadi bijak. Satu komentar yang ditulis tanpa kendali dapat menyakiti hati dan memperkeruh hubungan.",
         "Adab berbeda pendapat dimulai dari niat mencari kebenaran, bukan mencari kemenangan. Jika niatnya lurus, seseorang akan lebih mudah mengakui kekurangan argumennya dan menghargai ilmu orang lain.",
@@ -134,7 +167,10 @@
       "isFeatured": false,
       "coverImageUrl": "https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1400&q=80",
       "coverImageAlt": "Langit pagi di kawasan pemukiman",
-      "tags": ["Kajian", "Dakwah"],
+      "tags": [
+        "Kajian",
+        "Dakwah"
+      ],
       "content": [
         "Ada suasana berbeda dalam kajian Subuh. Jalan masih lengang, suara kota belum penuh, dan jamaah datang dengan wajah yang masih membawa bekas kantuk.",
         "Dari majelis kecil itu, saya belajar bahwa istiqamah tidak selalu tampil besar. Kadang ia hadir dalam langkah pelan seseorang menuju masjid, dalam catatan kecil yang dibuka, dan dalam doa yang dipanjatkan diam-diam.",
@@ -155,7 +191,10 @@
       "isFeatured": false,
       "coverImageUrl": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=80",
       "coverImageAlt": "Kelompok anak muda berdiskusi",
-      "tags": ["Remaja Muslim", "Berita Umat"],
+      "tags": [
+        "Remaja Muslim",
+        "Berita Umat"
+      ],
       "content": [
         "Program Literasi Islam untuk Pelajar resmi dimulai pada pekan ini. Kelas perdana membahas cara membaca artikel keislaman secara kritis dan menulis ringkasan yang mudah dipahami.",
         "Peserta diajak membedakan opini, dalil, kutipan ulama, dan kesimpulan penulis. Pendekatan ini diharapkan membantu pelajar tidak mudah menyebarkan informasi yang belum jelas sumbernya.",
@@ -176,7 +215,10 @@
       "isFeatured": false,
       "coverImageUrl": "https://images.unsplash.com/photo-1491308056676-205b7c9a7dc1?auto=format&fit=crop&w=1400&q=80",
       "coverImageAlt": "Buku terbuka di atas meja",
-      "tags": ["Kajian", "Akhlak"],
+      "tags": [
+        "Kajian",
+        "Akhlak"
+      ],
       "content": [
         "Hasad adalah penyakit hati yang membuat seseorang tidak nyaman melihat nikmat Allah pada saudaranya. Ia bisa muncul dalam bentuk komentar sinis, rasa tidak suka, atau doa buruk yang tersembunyi.",
         "Cara mengobatinya dimulai dari mengingat bahwa pembagian rezeki adalah hak Allah. Nikmat orang lain tidak mengurangi jatah kita. Bahkan, melihat kebaikan pada orang lain seharusnya menjadi dorongan untuk berdoa dan memperbaiki ikhtiar.",
@@ -197,7 +239,10 @@
       "isFeatured": false,
       "coverImageUrl": "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1400&q=80",
       "coverImageAlt": "Keluarga duduk bersama di rumah",
-      "tags": ["Keluarga Muslim", "Akhlak"],
+      "tags": [
+        "Keluarga Muslim",
+        "Akhlak"
+      ],
       "content": [
         "Draft ini disiapkan untuk contoh konten yang belum muncul di halaman publik."
       ]

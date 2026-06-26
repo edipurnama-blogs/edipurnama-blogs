@@ -11,22 +11,24 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
-  getFeaturedPosts,
-  getLatestPosts,
-  getPostsByType,
   profile,
-  publicBooks,
   quote,
   site,
+  type Post,
 } from "@/lib/dummy-content";
+import { getPublicBooks, getPublicFeaturedPosts, getPublicPosts, getPublicPostsByType } from "@/lib/public-data";
 
-export default function Home() {
-  const latestPosts = getLatestPosts(6);
-  const featuredPosts = getFeaturedPosts(3);
-  const dailyBlogs = getPostsByType("daily_blog").slice(0, 3);
-  const articles = getPostsByType("islamic_article").slice(0, 3);
-  const news = getPostsByType("news").slice(0, 3);
-  const books = publicBooks.slice(0, 3);
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const [latestPosts, featuredPosts, dailyBlogs, articles, news, books] = await Promise.all([
+    getPublicPosts(),
+    getPublicFeaturedPosts(3),
+    getPublicPostsByType("daily_blog"),
+    getPublicPostsByType("islamic_article"),
+    getPublicPostsByType("news"),
+    getPublicBooks(),
+  ]);
 
   return (
     <PublicShell>
@@ -137,9 +139,9 @@ export default function Home() {
 
         <section className="bg-background py-16">
           <div className="mx-auto w-full max-w-7xl space-y-14 px-4 sm:px-6 lg:px-8">
-            <ContentPreview title="Blog Harian" eyebrow="Refleksi" href="/blog" posts={dailyBlogs} icon={<Feather className="size-5" />} />
-            <ContentPreview title="Artikel Islam" eyebrow="Keilmuan" href="/artikel" posts={articles} icon={<BookOpen className="size-5" />} />
-            <ContentPreview title="Berita dan Seputar Umat" eyebrow="Aktual" href="/berita" posts={news} icon={<CalendarDays className="size-5" />} />
+            <ContentPreview title="Blog Harian" eyebrow="Refleksi" href="/blog" posts={dailyBlogs.slice(0, 3)} icon={<Feather className="size-5" />} />
+            <ContentPreview title="Artikel Islam" eyebrow="Keilmuan" href="/artikel" posts={articles.slice(0, 3)} icon={<BookOpen className="size-5" />} />
+            <ContentPreview title="Berita dan Seputar Umat" eyebrow="Aktual" href="/berita" posts={news.slice(0, 3)} icon={<CalendarDays className="size-5" />} />
           </div>
         </section>
 
@@ -169,7 +171,7 @@ export default function Home() {
               href="/karya-buku"
             />
             <div className="grid gap-5 lg:grid-cols-3">
-              {books.map((book) => (
+              {books.slice(0, 3).map((book) => (
                 <BookCard key={book.id} book={book} />
               ))}
             </div>
@@ -190,7 +192,7 @@ function ContentPreview({
   eyebrow: string;
   title: string;
   href: string;
-  posts: ReturnType<typeof getPostsByType>;
+  posts: Post[];
   icon: React.ReactNode;
 }) {
   return (

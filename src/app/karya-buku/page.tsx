@@ -3,14 +3,18 @@ import type { Metadata } from "next";
 import { BookCard } from "@/components/public/book-card";
 import { PublicShell } from "@/components/public/site-shell";
 import { Badge } from "@/components/ui/badge";
-import { publicBooks } from "@/lib/dummy-content";
+import { getPublicBooks } from "@/lib/public-data";
 
 export const metadata: Metadata = {
   title: "Karya Buku",
   description: "Daftar buku dan karya tulis dai.",
 };
 
-export default function KaryaBukuPage() {
+export const dynamic = "force-dynamic";
+
+export default async function KaryaBukuPage() {
+  const publicBooks = await getPublicBooks();
+
   return (
     <PublicShell>
       <main className="bg-white">

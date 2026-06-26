@@ -27,10 +27,10 @@ export function ListingPage({ eyebrow, title, description, posts }: ListingPageP
             <p className="text-lg leading-8 text-muted-foreground">{description}</p>
           </div>
 
-          <div className="mt-8 grid gap-4 rounded-lg border border-border bg-background p-4 md:grid-cols-[1fr_0.8fr]">
+          <form className="mt-8 grid gap-4 rounded-lg border border-border bg-background p-4 md:grid-cols-[1fr_0.8fr]" action="/search">
             <label className="relative block">
               <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
-              <Input className="pl-10" placeholder="Cari judul, tema, atau kata kunci" />
+              <Input name="q" className="pl-10" placeholder="Cari judul, tema, atau kata kunci" />
             </label>
             <div className="flex flex-wrap items-center gap-2">
               {categories.map((category) => (
@@ -39,7 +39,7 @@ export function ListingPage({ eyebrow, title, description, posts }: ListingPageP
                 </Badge>
               ))}
             </div>
-          </div>
+          </form>
 
           <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_280px]">
             <div className="grid gap-5 md:grid-cols-2">

@@ -8,19 +8,22 @@ import { PublicShell } from "@/components/public/site-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { getBookBySlug } from "@/lib/dummy-content";
+import { getPublicBookBySlug } from "@/lib/public-data";
+import { bookJsonLd, bookMetadata } from "@/lib/seo";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const book = getBookBySlug(slug);
-  return { title: book?.title ?? "Karya Buku", description: book?.description };
+  const book = await getPublicBookBySlug(slug);
+  return bookMetadata(book);
 }
 
 export default async function BookDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const book = getBookBySlug(slug);
+  const book = await getPublicBookBySlug(slug);
 
   if (!book) {
     notFound();
@@ -29,6 +32,10 @@ export default async function BookDetailPage({ params }: PageProps) {
   return (
     <PublicShell>
       <main className="bg-white">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(bookJsonLd(book)) }}
+        />
         <section className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:px-8 lg:py-20">
           <div>
             <Link href="/karya-buku" className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-primary">
