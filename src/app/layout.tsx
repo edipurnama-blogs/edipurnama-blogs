@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     default: "Blog Dai Islami",
     template: "%s | Blog Dai Islami",
   },
-  description: "Fondasi website blog dai Islami dengan Next.js, Supabase Auth, dan admin protected route.",
+  description: "Website blog dai Islami berisi profil, blog harian, artikel Islam, berita umat, kajian, dan karya buku.",
 };
 
 export default function RootLayout({

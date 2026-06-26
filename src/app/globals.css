@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fcfb;
+  --background: #f8fafc;
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
@@ -20,7 +20,7 @@
   --border: #d9ebe7;
   --input: #d9ebe7;
   --ring: #0f766e;
-  --radius: 1.5rem;
+  --radius: 0.75rem;
 }
 
 @theme inline {
@@ -60,9 +60,7 @@ html {
 }
 
 body {
-  background:
-    radial-gradient(circle at top, rgba(20, 184, 166, 0.1), transparent 32%),
-    linear-gradient(180deg, #f6fffd 0%, #f8fcfb 52%, #ffffff 100%);
+  background: #f8fafc;
   color: var(--foreground);
 }
 
@@ -75,4 +73,21 @@ h4 {
 
 a {
   transition: color 150ms ease;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.prose-content {
+  color: var(--foreground);
+  font-size: 1.075rem;
+  line-height: 2;
+}
+
+.prose-content p + p {
+  margin-top: 1.35rem;
 }

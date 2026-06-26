@@ -1,0 +1,268 @@
+{
+  "site": {
+    "name": "Edi Purnama",
+    "tagline": "Catatan dakwah, artikel Islam, berita umat, dan karya buku.",
+    "description": "Website personal dai untuk mengarsipkan tulisan, kajian, refleksi dakwah, dan karya buku yang ramah pembaca muda hingga dewasa.",
+    "email": "kontak@edipurnama.id",
+    "phone": "+62 812-0000-2026",
+    "socials": [
+      { "label": "Instagram", "url": "https://instagram.com/" },
+      { "label": "YouTube", "url": "https://youtube.com/" },
+      { "label": "WhatsApp", "url": "https://wa.me/6281200002026" }
+    ]
+  },
+  "profile": {
+    "name": "Ustadz Edi Purnama",
+    "shortBio": "Dai, penulis, dan pembina kajian remaja yang berfokus pada akhlak, keluarga muslim, dan literasi dakwah digital.",
+    "longBio": "Ustadz Edi Purnama aktif berdakwah melalui kajian masjid, kelas remaja, tulisan reflektif, dan pendampingan komunitas. Ia menulis dengan bahasa yang tenang, dekat dengan kehidupan sehari-hari, serta berusaha menghubungkan nilai Al-Qur'an dan Sunnah dengan persoalan keluarga, pendidikan, dan sosial umat.",
+    "education": [
+      "Pendidikan pesantren dan kajian kitab dasar",
+      "Studi dakwah dan komunikasi Islam",
+      "Pelatihan pendampingan remaja dan keluarga muslim"
+    ],
+    "focus": ["Akhlak", "Keluarga Muslim", "Dakwah Remaja", "Literasi Islam", "Kajian Masjid"],
+    "activities": [
+      "Mengisi kajian rutin pekanan",
+      "Membina komunitas remaja masjid",
+      "Menulis artikel dan refleksi dakwah",
+      "Menyusun materi khutbah dan tausiyah"
+    ],
+    "mainWorks": ["Menata Hati di Tengah Riuh", "Dakwah yang Mendekatkan", "Rumah yang Menumbuhkan Iman"],
+    "avatarUrl": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=900&q=80",
+    "heroImageUrl": "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1600&q=80"
+  },
+  "posts": [
+    {
+      "id": "post-001",
+      "title": "Menata Niat Sebelum Memulai Hari",
+      "slug": "menata-niat-sebelum-memulai-hari",
+      "excerpt": "Refleksi singkat tentang memulai aktivitas dengan niat yang jernih agar pekerjaan dunia bernilai ibadah.",
+      "contentType": "daily_blog",
+      "status": "published",
+      "categoryName": "Blog Harian",
+      "authorName": "Ustadz Edi Purnama",
+      "publishedAt": "2026-06-20T07:30:00.000Z",
+      "readingTimeMinutes": 4,
+      "isFeatured": true,
+      "coverImageUrl": "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=1400&q=80",
+      "coverImageAlt": "Cahaya matahari pagi di jalan yang tenang",
+      "tags": ["Dakwah", "Motivasi Islam", "Akhlak"],
+      "content": [
+        "Pagi sering kali datang bersama daftar pekerjaan yang panjang. Sebelum semua itu mengambil ruang di kepala, seorang muslim perlu berhenti sejenak untuk bertanya: untuk siapa hari ini dijalani?",
+        "Niat bukan kalimat formal yang sekadar diucapkan. Niat adalah arah batin. Ia membuat pekerjaan sederhana, seperti membantu keluarga, belajar, berdagang, atau melayani masyarakat, menjadi bagian dari ketaatan kepada Allah.",
+        "Ketika niat dirawat, hati lebih mudah sabar saat hasil belum terlihat. Kita tidak lagi bekerja hanya untuk dipuji, tetapi untuk menghadirkan manfaat dan menjaga amanah.",
+        "Mulailah hari dengan doa, susun prioritas, lalu jalani tugas satu per satu. Hari yang baik bukan selalu hari yang ringan, melainkan hari yang tetap terhubung dengan Allah di tengah kesibukan."
+      ]
+    },
+    {
+      "id": "post-002",
+      "title": "Makna Sabar dalam Kehidupan Seorang Muslim",
+      "slug": "makna-sabar-dalam-kehidupan-seorang-muslim",
+      "excerpt": "Sabar bukan pasif, tetapi kekuatan untuk tetap taat, menahan diri, dan bergerak dengan adab ketika keadaan sulit.",
+      "contentType": "islamic_article",
+      "status": "published",
+      "categoryName": "Akhlak",
+      "authorName": "Ustadz Edi Purnama",
+      "publishedAt": "2026-06-18T09:00:00.000Z",
+      "readingTimeMinutes": 7,
+      "isFeatured": true,
+      "coverImageUrl": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
+      "coverImageAlt": "Pemandangan alam yang lapang dan tenang",
+      "tags": ["Akhlak", "Motivasi Islam"],
+      "content": [
+        "Sabar dalam Islam memiliki makna yang luas. Ia mencakup kesungguhan untuk tetap menjalankan perintah Allah, menahan diri dari maksiat, dan menerima takdir yang berat tanpa kehilangan adab.",
+        "Banyak orang mengira sabar berarti diam dan menyerah. Padahal sabar justru menuntut kekuatan. Seorang yang sabar tetap mencari solusi, memperbaiki diri, dan mengambil sebab yang halal.",
+        "Dalam keluarga, sabar tampak pada kemampuan mendengar sebelum menilai. Dalam dakwah, sabar tampak pada konsistensi mengajak tanpa merendahkan. Dalam belajar, sabar tampak pada kesediaan mengulang sampai paham.",
+        "Sabar juga perlu ditemani ilmu. Tanpa ilmu, sabar dapat berubah menjadi pembiaran. Dengan ilmu, sabar menjadi jalan untuk memilih sikap yang paling dekat dengan ridha Allah."
+      ]
+    },
+    {
+      "id": "post-003",
+      "title": "Kegiatan Dakwah Ramadhan Bersama Remaja Masjid",
+      "slug": "kegiatan-dakwah-ramadhan-bersama-remaja-masjid",
+      "excerpt": "Dokumentasi kegiatan kajian, bakti sosial, dan buka puasa bersama yang digerakkan oleh remaja masjid.",
+      "contentType": "news",
+      "status": "published",
+      "categoryName": "Berita Umat",
+      "authorName": "Tim Redaksi",
+      "publishedAt": "2026-06-16T13:10:00.000Z",
+      "readingTimeMinutes": 5,
+      "isFeatured": true,
+      "coverImageUrl": "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?auto=format&fit=crop&w=1400&q=80",
+      "coverImageAlt": "Masjid saat senja",
+      "tags": ["Berita Umat", "Remaja Muslim", "Dakwah"],
+      "content": [
+        "Remaja Masjid Al-Ikhlas menyelenggarakan rangkaian kegiatan dakwah Ramadhan yang melibatkan pelajar, mahasiswa, dan warga sekitar. Program ini dirancang agar anak muda memiliki ruang berkhidmat sekaligus belajar mengelola kegiatan umat.",
+        "Kegiatan dimulai dengan kajian ba'da Ashar, dilanjutkan pembagian takjil, buka puasa bersama, dan penggalangan paket sembako. Panitia juga mengadakan kelas singkat tentang adab bermedia sosial selama Ramadhan.",
+        "Menurut panitia, kegiatan ini menjadi latihan kepemimpinan dan kepedulian sosial. Banyak peserta baru yang sebelumnya hanya hadir sebagai jamaah mulai terlibat sebagai relawan.",
+        "Program serupa direncanakan berlanjut dalam bentuk halaqah remaja dan pelatihan penulisan konten dakwah digital."
+      ]
+    },
+    {
+      "id": "post-004",
+      "title": "Adab Berbeda Pendapat di Ruang Digital",
+      "slug": "adab-berbeda-pendapat-di-ruang-digital",
+      "excerpt": "Panduan ringan menjaga lisan dan tulisan ketika berdiskusi di media sosial agar perbedaan tidak berubah menjadi permusuhan.",
+      "contentType": "islamic_article",
+      "status": "published",
+      "categoryName": "Dakwah",
+      "authorName": "Ustadz Edi Purnama",
+      "publishedAt": "2026-06-14T10:00:00.000Z",
+      "readingTimeMinutes": 6,
+      "isFeatured": false,
+      "coverImageUrl": "https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1400&q=80",
+      "coverImageAlt": "Meja kerja dengan buku dan perangkat digital",
+      "tags": ["Dakwah", "Akhlak"],
+      "content": [
+        "Ruang digital membuat percakapan menjadi cepat, tetapi tidak selalu membuatnya menjadi bijak. Satu komentar yang ditulis tanpa kendali dapat menyakiti hati dan memperkeruh hubungan.",
+        "Adab berbeda pendapat dimulai dari niat mencari kebenaran, bukan mencari kemenangan. Jika niatnya lurus, seseorang akan lebih mudah mengakui kekurangan argumennya dan menghargai ilmu orang lain.",
+        "Sebelum membalas komentar, baca ulang dengan tenang. Tanyakan apakah respons itu menambah manfaat atau sekadar melampiaskan emosi. Tidak semua hal perlu dijawab, dan tidak semua jawaban harus diberikan di ruang publik.",
+        "Dakwah di media sosial membutuhkan ilmu, bahasa yang santun, dan kesadaran bahwa manusia lebih mudah menerima nasihat ketika harga dirinya tidak diinjak."
+      ]
+    },
+    {
+      "id": "post-005",
+      "title": "Catatan Perjalanan Kajian Subuh",
+      "slug": "catatan-perjalanan-kajian-subuh",
+      "excerpt": "Pelajaran dari jamaah kecil yang istiqamah hadir sebelum matahari terbit.",
+      "contentType": "daily_blog",
+      "status": "published",
+      "categoryName": "Blog Harian",
+      "authorName": "Ustadz Edi Purnama",
+      "publishedAt": "2026-06-12T05:40:00.000Z",
+      "readingTimeMinutes": 3,
+      "isFeatured": false,
+      "coverImageUrl": "https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1400&q=80",
+      "coverImageAlt": "Langit pagi di kawasan pemukiman",
+      "tags": ["Kajian", "Dakwah"],
+      "content": [
+        "Ada suasana berbeda dalam kajian Subuh. Jalan masih lengang, suara kota belum penuh, dan jamaah datang dengan wajah yang masih membawa bekas kantuk.",
+        "Dari majelis kecil itu, saya belajar bahwa istiqamah tidak selalu tampil besar. Kadang ia hadir dalam langkah pelan seseorang menuju masjid, dalam catatan kecil yang dibuka, dan dalam doa yang dipanjatkan diam-diam.",
+        "Kebaikan seperti ini perlu dirawat. Bukan karena jumlahnya banyak, tetapi karena ia menjadi tanda bahwa hati masih ingin dekat dengan Allah."
+      ]
+    },
+    {
+      "id": "post-006",
+      "title": "Program Literasi Islam untuk Pelajar",
+      "slug": "program-literasi-islam-untuk-pelajar",
+      "excerpt": "Komunitas dakwah membuka kelas membaca dan menulis untuk membantu pelajar menyampaikan gagasan Islam dengan jernih.",
+      "contentType": "news",
+      "status": "published",
+      "categoryName": "Berita Umat",
+      "authorName": "Tim Redaksi",
+      "publishedAt": "2026-06-10T11:20:00.000Z",
+      "readingTimeMinutes": 4,
+      "isFeatured": false,
+      "coverImageUrl": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=80",
+      "coverImageAlt": "Kelompok anak muda berdiskusi",
+      "tags": ["Remaja Muslim", "Berita Umat"],
+      "content": [
+        "Program Literasi Islam untuk Pelajar resmi dimulai pada pekan ini. Kelas perdana membahas cara membaca artikel keislaman secara kritis dan menulis ringkasan yang mudah dipahami.",
+        "Peserta diajak membedakan opini, dalil, kutipan ulama, dan kesimpulan penulis. Pendekatan ini diharapkan membantu pelajar tidak mudah menyebarkan informasi yang belum jelas sumbernya.",
+        "Program berjalan selama enam pertemuan dan ditutup dengan proyek menulis artikel pendek bertema akhlak di sekolah."
+      ]
+    },
+    {
+      "id": "post-007",
+      "title": "Ringkasan Kajian: Menjaga Hati dari Hasad",
+      "slug": "ringkasan-kajian-menjaga-hati-dari-hasad",
+      "excerpt": "Hasad melelahkan jiwa karena membuat nikmat orang lain tampak seperti ancaman bagi diri sendiri.",
+      "contentType": "tausiyah",
+      "status": "published",
+      "categoryName": "Kajian",
+      "authorName": "Ustadz Edi Purnama",
+      "publishedAt": "2026-06-08T20:15:00.000Z",
+      "readingTimeMinutes": 5,
+      "isFeatured": false,
+      "coverImageUrl": "https://images.unsplash.com/photo-1491308056676-205b7c9a7dc1?auto=format&fit=crop&w=1400&q=80",
+      "coverImageAlt": "Buku terbuka di atas meja",
+      "tags": ["Kajian", "Akhlak"],
+      "content": [
+        "Hasad adalah penyakit hati yang membuat seseorang tidak nyaman melihat nikmat Allah pada saudaranya. Ia bisa muncul dalam bentuk komentar sinis, rasa tidak suka, atau doa buruk yang tersembunyi.",
+        "Cara mengobatinya dimulai dari mengingat bahwa pembagian rezeki adalah hak Allah. Nikmat orang lain tidak mengurangi jatah kita. Bahkan, melihat kebaikan pada orang lain seharusnya menjadi dorongan untuk berdoa dan memperbaiki ikhtiar.",
+        "Biasakan mendoakan keberkahan untuk orang yang mendapat nikmat. Lisan yang mendoakan kebaikan pelan-pelan mendidik hati agar lebih lapang."
+      ]
+    },
+    {
+      "id": "post-008",
+      "title": "Keluarga sebagai Madrasah Pertama",
+      "slug": "keluarga-sebagai-madrasah-pertama",
+      "excerpt": "Rumah menjadi tempat pertama anak belajar iman, adab, dan cara memandang kehidupan.",
+      "contentType": "islamic_article",
+      "status": "draft",
+      "categoryName": "Keluarga Muslim",
+      "authorName": "Ustadz Edi Purnama",
+      "publishedAt": null,
+      "readingTimeMinutes": 8,
+      "isFeatured": false,
+      "coverImageUrl": "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1400&q=80",
+      "coverImageAlt": "Keluarga duduk bersama di rumah",
+      "tags": ["Keluarga Muslim", "Akhlak"],
+      "content": [
+        "Draft ini disiapkan untuk contoh konten yang belum muncul di halaman publik."
+      ]
+    }
+  ],
+  "books": [
+    {
+      "id": "book-001",
+      "title": "Menata Hati di Tengah Riuh",
+      "slug": "menata-hati-di-tengah-riuh",
+      "subtitle": "Renungan pendek untuk muslim yang ingin tetap jernih di masa sibuk",
+      "description": "Kumpulan tulisan reflektif tentang niat, sabar, syukur, adab, dan ketenangan hati dalam kehidupan modern.",
+      "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=900&q=80",
+      "coverImageAlt": "Buku terbuka di dekat cangkir",
+      "publisher": "Pustaka Cahaya",
+      "publishedYear": 2025,
+      "status": "published",
+      "purchaseUrl": "https://example.com/buku/menata-hati",
+      "sampleFileUrl": "https://example.com/sample/menata-hati.pdf"
+    },
+    {
+      "id": "book-002",
+      "title": "Dakwah yang Mendekatkan",
+      "slug": "dakwah-yang-mendekatkan",
+      "subtitle": "Catatan komunikasi dakwah untuk komunitas dan ruang digital",
+      "description": "Panduan praktis membangun dakwah yang santun, argumentatif, dan dekat dengan kebutuhan jamaah.",
+      "coverImageUrl": "https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=900&q=80",
+      "coverImageAlt": "Tumpukan buku di meja baca",
+      "publisher": "Mizan Komunitas",
+      "publishedYear": 2026,
+      "status": "published",
+      "purchaseUrl": "https://example.com/buku/dakwah-yang-mendekatkan",
+      "sampleFileUrl": null
+    },
+    {
+      "id": "book-003",
+      "title": "Rumah yang Menumbuhkan Iman",
+      "slug": "rumah-yang-menumbuhkan-iman",
+      "subtitle": "Bekal keluarga muslim untuk mendidik dengan kasih dan adab",
+      "description": "Naskah buku tentang peran rumah, teladan orang tua, dan kebiasaan kecil yang menumbuhkan iman anak.",
+      "coverImageUrl": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80",
+      "coverImageAlt": "Rak buku dengan cahaya hangat",
+      "publisher": "Dalam Penyusunan",
+      "publishedYear": 2026,
+      "status": "coming_soon",
+      "purchaseUrl": null,
+      "sampleFileUrl": null
+    },
+    {
+      "id": "book-004",
+      "title": "Khutbah Ringkas Sepanjang Tahun",
+      "slug": "khutbah-ringkas-sepanjang-tahun",
+      "subtitle": "Materi mimbar yang padat, relevan, dan mudah dikembangkan",
+      "description": "Draft kumpulan naskah khutbah tematik untuk kebutuhan imam dan khatib komunitas.",
+      "coverImageUrl": "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=900&q=80",
+      "coverImageAlt": "Buku-buku klasik tersusun di rak",
+      "publisher": "Draft Internal",
+      "publishedYear": 2026,
+      "status": "draft",
+      "purchaseUrl": null,
+      "sampleFileUrl": null
+    }
+  ],
+  "quote": {
+    "text": "Dakwah yang baik bukan hanya menyampaikan kebenaran, tetapi juga membuka jalan agar hati lebih mudah mendekat kepada Allah.",
+    "source": "Catatan Dakwah"
+  }
+}
