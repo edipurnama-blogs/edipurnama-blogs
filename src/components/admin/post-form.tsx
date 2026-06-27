@@ -6,10 +6,11 @@ import { Save } from "lucide-react";
 import { savePostAction } from "@/app/actions/admin";
 import type { Category, Post } from "@/lib/admin-data";
 import { contentTypes, metaDescriptionFrom, publicationStatuses, slugify } from "@/lib/content-options";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { ToastMessage } from "@/components/ui/toast-message";
 
 export function PostForm({ post, categories, error }: { post?: Post | null; categories: Category[]; error?: string }) {
   const [title, setTitle] = useState(post?.title ?? "");
@@ -19,6 +20,7 @@ export function PostForm({ post, categories, error }: { post?: Post | null; cate
 
   return (
     <form action={savePostAction} className="grid gap-6 lg:grid-cols-[1fr_340px]">
+      <ToastMessage error={error} />
       <input type="hidden" name="id" value={post?.id ?? ""} />
       <input type="hidden" name="existing_cover_image_path" value={post?.cover_image_path ?? ""} />
       <input type="hidden" name="existing_cover_image_url" value={post?.cover_image_url ?? ""} />
@@ -156,10 +158,10 @@ export function PostForm({ post, categories, error }: { post?: Post | null; cate
             <Label htmlFor="canonical_url">Canonical URL</Label>
             <Input id="canonical_url" name="canonical_url" defaultValue={post?.canonical_url ?? ""} />
           </div>
-          <Button className="w-full gap-2" type="submit">
+          <SubmitButton className="w-full gap-2" type="submit" pendingChildren="Menyimpan...">
             <Save className="h-4 w-4" />
             Simpan Konten
-          </Button>
+          </SubmitButton>
         </section>
       </aside>
     </form>

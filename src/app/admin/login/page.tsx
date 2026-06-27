@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 
 import { loginAction } from "@/app/actions/auth";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { ToastMessage } from "@/components/ui/toast-message";
 
 export const metadata: Metadata = {
   title: "Login Admin",
@@ -29,6 +30,7 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
         </CardHeader>
         <CardContent>
           <form action={loginAction} className="space-y-5">
+            <ToastMessage error={params.error} />
             <input type="hidden" name="next" value={params.next ?? "/admin/dashboard"} />
 
             <div className="space-y-2">
@@ -47,9 +49,9 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
               </p>
             ) : null}
 
-            <Button className="w-full" type="submit">
+            <SubmitButton className="w-full gap-2" type="submit" pendingChildren="Memproses login...">
               Masuk ke Dashboard
-            </Button>
+            </SubmitButton>
           </form>
         </CardContent>
       </Card>

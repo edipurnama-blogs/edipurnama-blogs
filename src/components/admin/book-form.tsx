@@ -6,12 +6,13 @@ import { Save } from "lucide-react";
 import { saveBookAction } from "@/app/actions/admin";
 import type { Book } from "@/lib/admin-data";
 import { bookStatuses, metaDescriptionFrom, slugify } from "@/lib/content-options";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { ToastMessage } from "@/components/ui/toast-message";
 
-export function BookForm({ book }: { book?: Book | null }) {
+export function BookForm({ book, error }: { book?: Book | null; error?: string }) {
   const [title, setTitle] = useState(book?.title ?? "");
   const [description, setDescription] = useState(book?.description ?? "");
   const generatedSlug = useMemo(() => slugify(title), [title]);
@@ -19,11 +20,18 @@ export function BookForm({ book }: { book?: Book | null }) {
 
   return (
     <form action={saveBookAction} className="grid gap-6 lg:grid-cols-[1fr_340px]">
+      <ToastMessage error={error} />
       <input type="hidden" name="id" value={book?.id ?? ""} />
       <input type="hidden" name="existing_cover_image_path" value={book?.cover_image_path ?? ""} />
       <input type="hidden" name="existing_cover_image_url" value={book?.cover_image_url ?? ""} />
 
       <section className="space-y-5 rounded-lg border border-border bg-white p-5">
+        {error ? (
+          <div className="rounded-lg border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+            {error}
+          </div>
+        ) : null}
+
         <div className="grid gap-5 md:grid-cols-2">
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="title">Judul Buku</Label>
@@ -121,10 +129,10 @@ export function BookForm({ book }: { book?: Book | null }) {
               className="w-full rounded-2xl border border-input bg-muted px-4 py-3 text-sm text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
-          <Button className="w-full gap-2" type="submit">
+          <SubmitButton className="w-full gap-2" type="submit" pendingChildren="Menyimpan...">
             <Save className="h-4 w-4" />
             Simpan Buku
-          </Button>
+          </SubmitButton>
         </section>
       </aside>
     </form>

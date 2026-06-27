@@ -5,12 +5,14 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 
-import { BookOpen, ChevronsLeft, ChevronsRight, FolderOpen, Gauge, ImageIcon, LogOut, Menu, Newspaper, Settings, Tags, UserCog, X } from "lucide-react";
+import { BookOpen, ChevronsLeft, ChevronsRight, FolderOpen, Gauge, ImageIcon, LogOut, Menu, Newspaper, Settings, Tags, UserCircle, UserCog, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { cn } from "@/lib/utils";
 
 type Profile = {
+  avatar_url: string | null;
   display_name: string | null;
   username: string | null;
   role: string;
@@ -133,10 +135,10 @@ export function AdminShellClient({ children, profile, logoutAction }: AdminShell
           </nav>
 
           <form action={logoutAction} className="mt-auto pt-6">
-            <Button variant="outline" className={cn("w-full gap-2", !sidebarExpanded && "size-10 px-0")} type="submit" title={!sidebarExpanded ? "Keluar" : undefined}>
+            <SubmitButton variant="outline" className={cn("w-full gap-2", !sidebarExpanded && "size-10 px-0")} type="submit" title={!sidebarExpanded ? "Keluar" : undefined}>
               <LogOut className="size-4 shrink-0" aria-hidden="true" />
               <span className={cn(!sidebarExpanded && "sr-only")}>Keluar</span>
-            </Button>
+            </SubmitButton>
           </form>
         </div>
       </aside>
@@ -169,10 +171,24 @@ export function AdminShellClient({ children, profile, logoutAction }: AdminShell
               </Button>
             </div>
 
-            <div className="min-w-0 text-right text-sm">
-              <p className="truncate font-medium">{profileName}</p>
-              <p className="text-muted-foreground">{profile.role}</p>
-            </div>
+            <Link
+              href="/admin/settings/account"
+              className="flex min-w-0 items-center gap-3 rounded-full px-2 py-1.5 text-right text-sm transition-colors hover:bg-accent"
+              aria-label="Buka profil admin"
+            >
+              <span className="min-w-0">
+                <span className="block truncate font-medium">{profileName}</span>
+                <span className="block text-muted-foreground">{profile.role}</span>
+              </span>
+              <span className="grid size-10 shrink-0 place-items-center overflow-hidden rounded-full border border-border bg-muted text-primary">
+                {profile.avatar_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={profile.avatar_url} alt={profileName} className="h-full w-full object-cover" />
+                ) : (
+                  <UserCircle className="size-6" aria-hidden="true" />
+                )}
+              </span>
+            </Link>
           </div>
         </header>
 

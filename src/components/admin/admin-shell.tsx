@@ -4,7 +4,7 @@ import { logoutAction } from "@/app/actions/auth";
 import { AdminShellClient } from "@/components/admin/admin-shell-client";
 import type { Database } from "@/types/database";
 
-type Profile = Pick<Database["public"]["Tables"]["profiles"]["Row"], "display_name" | "username" | "role">;
+type Profile = Pick<Database["public"]["Tables"]["profiles"]["Row"], "avatar_url" | "display_name" | "username" | "role">;
 
 export function AdminShell({
   children,

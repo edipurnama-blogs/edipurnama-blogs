@@ -2,14 +2,16 @@ import { Trash2 } from "lucide-react";
 
 import { deleteTagAction, saveTagAction } from "@/app/actions/admin";
 import { AdminShell } from "@/components/admin/admin-shell";
-import { Button } from "@/components/ui/button";
+import { ConfirmDeleteButton } from "@/components/ui/confirm-delete-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { ToastMessage } from "@/components/ui/toast-message";
 import { getTags } from "@/lib/admin-data";
 import { requireAdminUser } from "@/lib/auth";
 
 type TagsPageProps = {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; error?: string; success?: string }>;
 };
 
 export default async function AdminTagsPage({ searchParams }: TagsPageProps) {
@@ -21,6 +23,7 @@ export default async function AdminTagsPage({ searchParams }: TagsPageProps) {
   return (
     <AdminShell profile={profile}>
       <div className="space-y-6">
+        <ToastMessage error={params.error} success={params.success} />
         <div>
           <h1 className="text-3xl font-semibold tracking-tight">Manajemen Tag</h1>
           <p className="mt-2 text-muted-foreground">Tambah, edit, hapus, dan cari tag konten.</p>
@@ -36,14 +39,14 @@ export default async function AdminTagsPage({ searchParams }: TagsPageProps) {
               <Label htmlFor="slug">Slug</Label>
               <Input id="slug" name="slug" placeholder="otomatis" />
             </div>
-            <Button type="submit" className="self-end">Tambah Tag</Button>
+            <SubmitButton type="submit" className="self-end gap-2" pendingChildren="Menambahkan...">Tambah Tag</SubmitButton>
           </form>
 
           <form className="rounded-lg border border-border bg-white p-5">
             <Label htmlFor="q">Search tag</Label>
             <div className="mt-2 flex gap-2">
               <Input id="q" name="q" defaultValue={params.q ?? ""} placeholder="Cari nama tag..." />
-              <Button type="submit" variant="outline">Cari</Button>
+              <SubmitButton type="submit" variant="outline" className="gap-2" pendingChildren="Mencari...">Cari</SubmitButton>
             </div>
           </form>
         </div>
@@ -54,14 +57,14 @@ export default async function AdminTagsPage({ searchParams }: TagsPageProps) {
               <input type="hidden" name="id" value={tag.id} />
               <Input name="name" defaultValue={tag.name} aria-label="Nama tag" />
               <Input name="slug" defaultValue={tag.slug} aria-label="Slug tag" />
-              <Button type="submit" variant="outline">Simpan</Button>
-              <Button form={`delete-tag-${tag.id}`} type="submit" variant="outline" aria-label="Hapus tag">
+              <SubmitButton type="submit" variant="outline" className="gap-2" pendingChildren="Menyimpan...">Simpan</SubmitButton>
+              <ConfirmDeleteButton form={`delete-tag-${tag.id}`} type="submit" variant="outline" aria-label="Hapus tag" confirmMessage={`Apakah yakin ingin menghapus tag "${tag.name}"?`}>
                 <Trash2 className="h-4 w-4" />
-              </Button>
+              </ConfirmDeleteButton>
             </form>
           ))}
           {tags.map((tag) => (
-            <form key={`delete-${tag.id}`} id={`delete-tag-${tag.id}`} action={deleteTagAction}>
+            <form key={`delete-${tag.id}`} id={`delete-tag-${tag.id}`} action={deleteTagAction} className="hidden">
               <input type="hidden" name="id" value={tag.id} />
             </form>
           ))}

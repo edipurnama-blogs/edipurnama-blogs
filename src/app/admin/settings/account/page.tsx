@@ -2,18 +2,25 @@ import Image from "next/image";
 
 import { updateAccountAction } from "@/app/actions/admin";
 import { AdminShell } from "@/components/admin/admin-shell";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { Textarea } from "@/components/ui/textarea";
+import { ToastMessage } from "@/components/ui/toast-message";
 import { requireAdminUser } from "@/lib/auth";
 
-export default async function AdminAccountSettingsPage() {
+type AdminAccountSettingsPageProps = {
+  searchParams: Promise<{ error?: string; success?: string }>;
+};
+
+export default async function AdminAccountSettingsPage({ searchParams }: AdminAccountSettingsPageProps) {
   const { profile } = await requireAdminUser();
+  const params = await searchParams;
 
   return (
     <AdminShell profile={profile}>
       <div className="space-y-6">
+        <ToastMessage error={params.error} success={params.success} />
         <div>
           <h1 className="text-3xl font-semibold tracking-tight">Pengaturan Akun</h1>
           <p className="mt-2 text-muted-foreground">Ubah profil admin, avatar, username, bio, dan password.</p>
@@ -62,7 +69,7 @@ export default async function AdminAccountSettingsPage() {
             </div>
           </section>
 
-          <Button type="submit">Simpan Perubahan</Button>
+          <SubmitButton type="submit" className="gap-2" pendingChildren="Menyimpan...">Simpan Perubahan</SubmitButton>
         </form>
       </div>
     </AdminShell>

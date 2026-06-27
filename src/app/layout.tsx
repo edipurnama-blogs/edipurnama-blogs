@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import { absoluteUrl, getSiteUrl } from "@/lib/seo";
 import { getSiteSettings } from "@/lib/admin-data";
+import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -72,6 +73,7 @@ export default async function RootLayout({
     <html lang="id" className={`${plusJakartaSans.variable} ${playfairDisplay.variable} h-full`}>
       <body className="min-h-full bg-background font-sans text-foreground antialiased" style={themeVars}>
         {children}
+        <Toaster />
       </body>
     </html>
   );

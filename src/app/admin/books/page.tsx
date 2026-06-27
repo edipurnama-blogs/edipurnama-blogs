@@ -5,16 +5,24 @@ import { deleteBookAction } from "@/app/actions/admin";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ConfirmDeleteButton } from "@/components/ui/confirm-delete-button";
+import { ToastMessage } from "@/components/ui/toast-message";
 import { getBooks } from "@/lib/admin-data";
 import { requireAdminUser } from "@/lib/auth";
 
-export default async function AdminBooksPage() {
+type AdminBooksPageProps = {
+  searchParams: Promise<{ error?: string; success?: string }>;
+};
+
+export default async function AdminBooksPage({ searchParams }: AdminBooksPageProps) {
   const { profile } = await requireAdminUser();
+  const params = await searchParams;
   const books = await getBooks();
 
   return (
     <AdminShell profile={profile}>
       <div className="space-y-6">
+        <ToastMessage error={params.error} success={params.success} />
         <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight">Manajemen Karya Buku</h1>
@@ -53,9 +61,9 @@ export default async function AdminBooksPage() {
                   </Button>
                   <form action={deleteBookAction}>
                     <input type="hidden" name="id" value={book.id} />
-                    <Button type="submit" variant="outline" size="sm" aria-label="Hapus buku">
+                    <ConfirmDeleteButton type="submit" variant="outline" size="sm" aria-label="Hapus buku" confirmMessage={`Apakah yakin ingin menghapus buku "${book.title}"?`}>
                       <Trash2 className="h-4 w-4" />
-                    </Button>
+                    </ConfirmDeleteButton>
                   </form>
                 </div>
               </div>

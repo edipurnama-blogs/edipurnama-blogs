@@ -3,20 +3,29 @@ import { Copy, Trash2, Upload } from "lucide-react";
 import { deleteMediaAction, uploadMediaAction } from "@/app/actions/admin";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Button } from "@/components/ui/button";
+import { ConfirmDeleteButton } from "@/components/ui/confirm-delete-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { ToastMessage } from "@/components/ui/toast-message";
 import { getMediaAssets } from "@/lib/admin-data";
 import { requireAdminUser } from "@/lib/auth";
 import { formatDate } from "@/lib/dummy-content";
 
-export default async function AdminMediaPage() {
+type AdminMediaPageProps = {
+  searchParams: Promise<{ error?: string; success?: string }>;
+};
+
+export default async function AdminMediaPage({ searchParams }: AdminMediaPageProps) {
   const { profile } = await requireAdminUser();
+  const params = await searchParams;
   const mediaAssets = await getMediaAssets();
 
   return (
     <AdminShell profile={profile}>
       <div className="space-y-6">
+        <ToastMessage error={params.error} success={params.success} />
         <div>
           <h1 className="text-3xl font-semibold tracking-tight">Upload Gambar</h1>
           <p className="mt-2 text-muted-foreground">Upload ke bucket blog-images, book-covers, atau avatars dan simpan metadata media.</p>
@@ -44,10 +53,10 @@ export default async function AdminMediaPage() {
             <Label htmlFor="alt_text">Alt text</Label>
             <Input id="alt_text" name="alt_text" />
           </div>
-          <Button type="submit" className="self-end gap-2">
+          <SubmitButton type="submit" className="self-end gap-2" pendingChildren="Mengupload...">
             <Upload className="h-4 w-4" />
             Upload
-          </Button>
+          </SubmitButton>
         </form>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -76,9 +85,9 @@ export default async function AdminMediaPage() {
                     <input type="hidden" name="id" value={asset.id} />
                     <input type="hidden" name="bucket_name" value={asset.bucket_name} />
                     <input type="hidden" name="file_path" value={asset.file_path} />
-                    <Button type="submit" variant="outline" size="sm" aria-label="Hapus media">
+                    <ConfirmDeleteButton type="submit" variant="outline" size="sm" aria-label="Hapus media" confirmMessage={`Apakah yakin ingin menghapus media "${asset.file_name ?? asset.file_path}"?`}>
                       <Trash2 className="h-4 w-4" />
-                    </Button>
+                    </ConfirmDeleteButton>
                   </form>
                 </div>
               </div>

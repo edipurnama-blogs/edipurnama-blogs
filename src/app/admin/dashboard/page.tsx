@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, FileText, FolderOpen, Plus, Tags } from "lucide-react";
+import { BookOpen, FileText, FolderOpen, LineChart, Plus, Tags } from "lucide-react";
 
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +22,8 @@ export default async function AdminDashboardPage() {
     { label: "Tag", value: tags.length, icon: Tags },
     { label: "Karya Buku", value: books.length, icon: BookOpen },
   ];
+  const activity = buildWeeklyActivity(posts);
+  const chart = buildLineChart(activity);
 
   return (
     <AdminShell profile={profile}>
@@ -65,6 +67,62 @@ export default async function AdminDashboardPage() {
           })}
         </section>
 
+        <Card className="overflow-hidden rounded-lg">
+          <CardHeader className="flex-row items-start justify-between space-y-0">
+            <div>
+              <CardTitle>Statistik Konten</CardTitle>
+              <CardDescription>Grafik publikasi dan draft konten dalam 7 hari terakhir.</CardDescription>
+            </div>
+            <div className="grid size-10 place-items-center rounded-full bg-primary/10 text-primary">
+              <LineChart className="h-5 w-5" />
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="h-72 w-full">
+              <svg viewBox={`0 0 ${chart.width} ${chart.height}`} className="h-full w-full" role="img" aria-label="Grafik statistik konten 7 hari terakhir">
+                <defs>
+                  <linearGradient id="contentLineGradient" x1="0" x2="1" y1="0" y2="0">
+                    <stop offset="0%" stopColor="#0f766e" />
+                    <stop offset="50%" stopColor="var(--primary)" />
+                    <stop offset="100%" stopColor="#2563eb" />
+                  </linearGradient>
+                  <linearGradient id="contentAreaGradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.28" />
+                    <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.02" />
+                  </linearGradient>
+                </defs>
+                {chart.gridLines.map((line) => (
+                  <line key={line.y} x1={chart.padding} x2={chart.width - chart.padding} y1={line.y} y2={line.y} stroke="var(--border)" strokeDasharray="5 8" />
+                ))}
+                <path d={chart.areaPath} fill="url(#contentAreaGradient)" />
+                <path d={chart.linePath} fill="none" stroke="url(#contentLineGradient)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="5" />
+                {chart.points.map((point) => (
+                  <g key={point.label}>
+                    <circle cx={point.x} cy={point.y} r="5.5" fill="white" stroke="var(--primary)" strokeWidth="3" />
+                    <text x={point.x} y={chart.height - 18} textAnchor="middle" className="fill-muted-foreground text-[12px] font-medium">
+                      {point.label}
+                    </text>
+                  </g>
+                ))}
+              </svg>
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-border bg-background px-4 py-3">
+                <p className="text-xs text-muted-foreground">Total 7 hari</p>
+                <p className="mt-1 text-2xl font-semibold">{activity.reduce((total, item) => total + item.value, 0)}</p>
+              </div>
+              <div className="rounded-lg border border-border bg-background px-4 py-3">
+                <p className="text-xs text-muted-foreground">Tertinggi</p>
+                <p className="mt-1 text-2xl font-semibold">{Math.max(0, ...activity.map((item) => item.value))}</p>
+              </div>
+              <div className="rounded-lg border border-border bg-background px-4 py-3">
+                <p className="text-xs text-muted-foreground">Published aktif</p>
+                <p className="mt-1 text-2xl font-semibold">{posts.filter((post) => post.status === "published").length}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         <section className="grid gap-6 lg:grid-cols-[1fr_320px]">
           <Card className="rounded-lg">
             <CardHeader>
@@ -101,4 +159,52 @@ export default async function AdminDashboardPage() {
       </div>
     </AdminShell>
   );
+}
+
+function buildWeeklyActivity(posts: Awaited<ReturnType<typeof getPosts>>) {
+  const formatter = new Intl.DateTimeFormat("id-ID", { day: "2-digit", month: "short" });
+  const days = Array.from({ length: 7 }, (_, index) => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() - (6 - index));
+    const key = date.toISOString().slice(0, 10);
+
+    return {
+      key,
+      label: formatter.format(date),
+      value: 0,
+    };
+  });
+
+  const counts = new Map(days.map((day) => [day.key, day.value]));
+  posts.forEach((post) => {
+    const key = new Date(post.created_at).toISOString().slice(0, 10);
+    if (counts.has(key)) {
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+  });
+
+  return days.map((day) => ({ ...day, value: counts.get(day.key) ?? 0 }));
+}
+
+function buildLineChart(activity: ReturnType<typeof buildWeeklyActivity>) {
+  const width = 760;
+  const height = 260;
+  const padding = 36;
+  const baseline = height - 48;
+  const chartHeight = baseline - padding;
+  const chartWidth = width - padding * 2;
+  const maxValue = Math.max(1, ...activity.map((item) => item.value));
+  const points = activity.map((item, index) => {
+    const x = padding + (chartWidth / Math.max(1, activity.length - 1)) * index;
+    const y = padding + ((maxValue - item.value) / maxValue) * chartHeight;
+    return { ...item, x, y };
+  });
+  const linePath = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
+  const areaPath = `${linePath} L ${points[points.length - 1]?.x ?? padding} ${baseline} L ${points[0]?.x ?? padding} ${baseline} Z`;
+  const gridLines = Array.from({ length: 4 }, (_, index) => ({
+    y: padding + (chartHeight / 3) * index,
+  }));
+
+  return { width, height, padding, points, linePath, areaPath, gridLines };
 }

@@ -67,6 +67,10 @@ function redirectWithError(path: string, error: unknown): never {
   redirect(`${path}?error=${encodeURIComponent(errorMessage(error))}`);
 }
 
+function redirectWithSuccess(path: string, message: string): never {
+  redirect(`${path}?success=${encodeURIComponent(message)}`);
+}
+
 async function uploadImageFromForm(formData: FormData, key: string, bucket: string, folder: string, uploaderId: string) {
   const file = formData.get(key);
 
@@ -170,36 +174,38 @@ export async function savePostAction(formData: FormData) {
   revalidatePath("/admin/dashboard");
   revalidatePublicContent();
   revalidatePath(`/${contentTypePath(payload.content_type)}/${payload.slug}`);
-  redirect("/admin/posts");
+  redirectWithSuccess("/admin/posts", "Konten berhasil disimpan.");
 }
 
 export async function updatePostStatusAction(formData: FormData) {
   await requireAdminUser();
   const id = stringValue(formData, "id");
   const status = stringValue(formData, "status") as PublicationStatus | null;
-  if (!id || !status) throw new Error("Post dan status wajib diisi.");
+  if (!id || !status) redirectWithError("/admin/posts", new Error("Post dan status wajib diisi."));
 
   const supabase = createAdminClient();
   const { error } = await mutableTable(supabase, "posts").update({ status }).eq("id", id);
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError("/admin/posts", error);
 
   revalidatePath("/admin/posts");
   revalidatePath("/admin/dashboard");
   revalidatePublicContent();
+  redirectWithSuccess("/admin/posts", "Status konten berhasil diperbarui.");
 }
 
 export async function deletePostAction(formData: FormData) {
   await requireAdminUser();
   const id = stringValue(formData, "id");
-  if (!id) throw new Error("Post wajib dipilih.");
+  if (!id) redirectWithError("/admin/posts", new Error("Post wajib dipilih."));
 
   const supabase = createAdminClient();
   const { error } = await mutableTable(supabase, "posts").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError("/admin/posts", error);
 
   revalidatePath("/admin/posts");
   revalidatePath("/admin/dashboard");
   revalidatePublicContent();
+  redirectWithSuccess("/admin/posts", "Konten berhasil dihapus.");
 }
 
 export async function saveCategoryAction(formData: FormData) {
@@ -208,7 +214,7 @@ export async function saveCategoryAction(formData: FormData) {
   const id = stringValue(formData, "id");
   const name = stringValue(formData, "name");
   const slug = slugify(stringValue(formData, "slug") ?? name ?? "");
-  if (!name || !slug) throw new Error("Nama kategori dan slug wajib diisi.");
+  if (!name || !slug) redirectWithError("/admin/categories", new Error("Nama kategori dan slug wajib diisi."));
 
   const payload = {
     name,
@@ -223,22 +229,24 @@ export async function saveCategoryAction(formData: FormData) {
     ? await mutableTable(supabase, "categories").update(payload).eq("id", id)
     : await mutableTable(supabase, "categories").insert(payload);
 
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError("/admin/categories", error);
 
   revalidatePath("/admin/categories");
   revalidatePath("/admin/posts");
+  redirectWithSuccess("/admin/categories", id ? "Kategori berhasil disimpan." : "Kategori berhasil ditambahkan.");
 }
 
 export async function deleteCategoryAction(formData: FormData) {
   await requireAdminUser();
   const id = stringValue(formData, "id");
-  if (!id) throw new Error("Kategori wajib dipilih.");
+  if (!id) redirectWithError("/admin/categories", new Error("Kategori wajib dipilih."));
 
   const supabase = createAdminClient();
   const { error } = await mutableTable(supabase, "categories").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError("/admin/categories", error);
 
   revalidatePath("/admin/categories");
+  redirectWithSuccess("/admin/categories", "Kategori berhasil dihapus.");
 }
 
 export async function saveTagAction(formData: FormData) {
@@ -247,38 +255,46 @@ export async function saveTagAction(formData: FormData) {
   const id = stringValue(formData, "id");
   const name = stringValue(formData, "name");
   const slug = slugify(stringValue(formData, "slug") ?? name ?? "");
-  if (!name || !slug) throw new Error("Nama tag dan slug wajib diisi.");
+  if (!name || !slug) redirectWithError("/admin/tags", new Error("Nama tag dan slug wajib diisi."));
 
   const payload = { name, slug };
   const { error } = id ? await mutableTable(supabase, "tags").update(payload).eq("id", id) : await mutableTable(supabase, "tags").insert(payload);
 
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError("/admin/tags", error);
 
   revalidatePath("/admin/tags");
+  redirectWithSuccess("/admin/tags", id ? "Tag berhasil disimpan." : "Tag berhasil ditambahkan.");
 }
 
 export async function deleteTagAction(formData: FormData) {
   await requireAdminUser();
   const id = stringValue(formData, "id");
-  if (!id) throw new Error("Tag wajib dipilih.");
+  if (!id) redirectWithError("/admin/tags", new Error("Tag wajib dipilih."));
 
   const supabase = createAdminClient();
   const { error } = await mutableTable(supabase, "tags").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError("/admin/tags", error);
 
   revalidatePath("/admin/tags");
+  redirectWithSuccess("/admin/tags", "Tag berhasil dihapus.");
 }
 
 export async function saveBookAction(formData: FormData) {
   const { user } = await requireAdminUser();
   const supabase = createAdminClient();
   const id = stringValue(formData, "id");
+  const formPath = id ? `/admin/books/${id}/edit` : "/admin/books/new";
   const title = stringValue(formData, "title");
   const slug = slugify(title ?? "");
-  if (!title || !slug) throw new Error("Judul dan slug wajib diisi.");
+  if (!title || !slug) redirectWithError(formPath, new Error("Judul dan slug wajib diisi."));
   const existingCoverPath = stringValue(formData, "existing_cover_image_path");
   const existingCoverUrl = stringValue(formData, "existing_cover_image_url");
-  const upload = await uploadImageFromForm(formData, "cover_image", "book-covers", "books", user.id);
+  let upload: Awaited<ReturnType<typeof uploadImageFromForm>>;
+  try {
+    upload = await uploadImageFromForm(formData, "cover_image", "book-covers", "books", user.id);
+  } catch (error) {
+    redirectWithError(formPath, error);
+  }
   const description = stringValue(formData, "description");
 
   const payload = {
@@ -302,7 +318,7 @@ export async function saveBookAction(formData: FormData) {
 
   const { error } = id ? await mutableTable(supabase, "books").update(payload).eq("id", id) : await mutableTable(supabase, "books").insert(payload);
 
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError(formPath, error);
 
   if (id && upload?.path) {
     await deleteStoredImage("book-covers", existingCoverPath);
@@ -312,28 +328,34 @@ export async function saveBookAction(formData: FormData) {
   revalidatePath("/admin/dashboard");
   revalidatePublicBooks();
   revalidatePath(`/karya-buku/${payload.slug}`);
-  redirect("/admin/books");
+  redirectWithSuccess("/admin/books", "Buku berhasil disimpan.");
 }
 
 export async function deleteBookAction(formData: FormData) {
   await requireAdminUser();
   const id = stringValue(formData, "id");
-  if (!id) throw new Error("Buku wajib dipilih.");
+  if (!id) redirectWithError("/admin/books", new Error("Buku wajib dipilih."));
 
   const supabase = createAdminClient();
   const { error } = await mutableTable(supabase, "books").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError("/admin/books", error);
 
   revalidatePath("/admin/books");
   revalidatePath("/admin/dashboard");
   revalidatePublicBooks();
+  redirectWithSuccess("/admin/books", "Buku berhasil dihapus.");
 }
 
 export async function uploadMediaAction(formData: FormData) {
   const { user } = await requireAdminUser();
   const bucket = stringValue(formData, "bucket_name") ?? "blog-images";
-  await uploadImageFromForm(formData, "file", bucket, "media", user.id);
+  try {
+    await uploadImageFromForm(formData, "file", bucket, "media", user.id);
+  } catch (error) {
+    redirectWithError("/admin/media", error);
+  }
   revalidatePath("/admin/media");
+  redirectWithSuccess("/admin/media", "Media berhasil diupload.");
 }
 
 export async function deleteMediaAction(formData: FormData) {
@@ -341,14 +363,15 @@ export async function deleteMediaAction(formData: FormData) {
   const id = stringValue(formData, "id");
   const bucket = stringValue(formData, "bucket_name");
   const filePath = stringValue(formData, "file_path");
-  if (!id || !bucket || !filePath) throw new Error("Media wajib dipilih.");
+  if (!id || !bucket || !filePath) redirectWithError("/admin/media", new Error("Media wajib dipilih."));
 
   const supabase = createAdminClient();
   await supabase.storage.from(bucket).remove([filePath]);
   const { error } = await mutableTable(supabase, "media_assets").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError("/admin/media", error);
 
   revalidatePath("/admin/media");
+  redirectWithSuccess("/admin/media", "Media berhasil dihapus.");
 }
 
 export async function updateAccountAction(formData: FormData) {
@@ -362,7 +385,7 @@ export async function updateAccountAction(formData: FormData) {
   try {
     avatarUpload = await uploadImageFromForm(formData, "avatar", "avatars", "profiles", user.id);
   } catch (error) {
-    throw new Error(errorMessage(error));
+    redirectWithError("/admin/settings/account", error);
   }
 
   const { error } = await mutableTable(supabase, "profiles")
@@ -375,7 +398,7 @@ export async function updateAccountAction(formData: FormData) {
     })
     .eq("id", user.id);
 
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError("/admin/settings/account", error);
 
   if (avatarUpload?.path) {
     await deleteStoredImage("avatars", existingAvatarPath);
@@ -384,10 +407,11 @@ export async function updateAccountAction(formData: FormData) {
   if (password) {
     const userSupabase = await createClient();
     const { error: passwordError } = await userSupabase.auth.updateUser({ password });
-    if (passwordError) throw new Error(passwordError.message);
+    if (passwordError) redirectWithError("/admin/settings/account", passwordError);
   }
 
   revalidatePath("/admin/settings/account");
+  redirectWithSuccess("/admin/settings/account", "Pengaturan akun berhasil disimpan.");
 }
 
 function siteSettingsPayload(
@@ -446,7 +470,7 @@ export async function saveSiteSettingsAction(formData: FormData) {
     logoUpload = await uploadImageFromForm(formData, "logo", "blog-images", "site", user.id);
     faviconUpload = await uploadImageFromForm(formData, "favicon", "blog-images", "site", user.id);
   } catch (error) {
-    throw new Error(errorMessage(error));
+    redirectWithError("/admin/settings/site", error);
   }
 
   const payload = siteSettingsPayload(formData, logoUpload, faviconUpload);
@@ -464,7 +488,7 @@ export async function saveSiteSettingsAction(formData: FormData) {
     error = retry.error;
   }
 
-  if (error) throw new Error(error.message);
+  if (error) redirectWithError("/admin/settings/site", error);
 
   if (logoUpload?.path) {
     await deleteStoredImage("blog-images", existingLogoPath);
@@ -477,4 +501,5 @@ export async function saveSiteSettingsAction(formData: FormData) {
   revalidatePath("/admin/settings/site");
   revalidatePath("/");
   revalidatePath("/profil");
+  redirectWithSuccess("/admin/settings/site", "Pengaturan situs berhasil disimpan.");
 }

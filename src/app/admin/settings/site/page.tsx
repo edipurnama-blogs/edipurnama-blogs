@@ -3,20 +3,27 @@ import Image from "next/image";
 import { saveSiteSettingsAction } from "@/app/actions/admin";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { PrimaryColorField } from "@/components/admin/primary-color-field";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { Textarea } from "@/components/ui/textarea";
+import { ToastMessage } from "@/components/ui/toast-message";
 import { getSiteSettings } from "@/lib/admin-data";
 import { requireAdminUser } from "@/lib/auth";
 
-export default async function AdminSiteSettingsPage() {
+type AdminSiteSettingsPageProps = {
+  searchParams: Promise<{ error?: string; success?: string }>;
+};
+
+export default async function AdminSiteSettingsPage({ searchParams }: AdminSiteSettingsPageProps) {
   const { profile } = await requireAdminUser();
+  const params = await searchParams;
   const settings = await getSiteSettings();
 
   return (
     <AdminShell profile={profile}>
       <div className="space-y-6">
+        <ToastMessage error={params.error} success={params.success} />
         <div>
           <h1 className="text-3xl font-semibold tracking-tight">Pengaturan Situs</h1>
           <p className="mt-2 text-muted-foreground">Atur identitas website, kontak, sosial media, logo, dan favicon.</p>
@@ -100,7 +107,7 @@ export default async function AdminSiteSettingsPage() {
             </div>
           </section>
 
-          <Button type="submit">Simpan Pengaturan</Button>
+          <SubmitButton type="submit" className="gap-2" pendingChildren="Menyimpan...">Simpan Pengaturan</SubmitButton>
         </form>
       </div>
     </AdminShell>

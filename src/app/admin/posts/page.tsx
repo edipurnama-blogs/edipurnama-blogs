@@ -5,8 +5,11 @@ import { deletePostAction, updatePostStatusAction } from "@/app/actions/admin";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ConfirmDeleteButton } from "@/components/ui/confirm-delete-button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { ToastMessage } from "@/components/ui/toast-message";
 import { contentTypes, getPosts, publicationStatuses } from "@/lib/admin-data";
 import { requireAdminUser } from "@/lib/auth";
 import { contentTypeLabel, contentTypePath, formatDate } from "@/lib/dummy-content";
@@ -16,6 +19,8 @@ type PostsPageProps = {
     q?: string;
     status?: string;
     type?: string;
+    error?: string;
+    success?: string;
   }>;
 };
 
@@ -35,6 +40,7 @@ export default async function AdminPostsPage({ searchParams }: PostsPageProps) {
   return (
     <AdminShell profile={profile}>
       <div className="space-y-6">
+        <ToastMessage error={params.error} success={params.success} />
         <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight">Manajemen Konten</h1>
@@ -72,7 +78,7 @@ export default async function AdminPostsPage({ searchParams }: PostsPageProps) {
             ))}
             </SelectContent>
           </Select>
-          <Button type="submit" variant="outline">Filter</Button>
+          <SubmitButton type="submit" variant="outline" className="gap-2" pendingChildren="Memfilter...">Filter</SubmitButton>
         </form>
 
         <div className="overflow-hidden rounded-lg border border-border bg-white">
@@ -125,15 +131,15 @@ export default async function AdminPostsPage({ searchParams }: PostsPageProps) {
                         <form action={updatePostStatusAction}>
                           <input type="hidden" name="id" value={post.id} />
                           <input type="hidden" name="status" value={post.status === "published" ? "draft" : "published"} />
-                          <Button size="sm" variant="outline" type="submit" aria-label="Publish atau draft">
+                          <SubmitButton size="sm" variant="outline" type="submit" aria-label="Publish atau draft">
                             <Archive className="h-4 w-4" />
-                          </Button>
+                          </SubmitButton>
                         </form>
                         <form action={deletePostAction}>
                           <input type="hidden" name="id" value={post.id} />
-                          <Button size="sm" variant="outline" type="submit" aria-label="Delete">
+                          <ConfirmDeleteButton size="sm" variant="outline" type="submit" aria-label="Delete" confirmMessage={`Apakah yakin ingin menghapus konten "${post.title}"?`}>
                             <Trash2 className="h-4 w-4" />
-                          </Button>
+                          </ConfirmDeleteButton>
                         </form>
                       </div>
                     </td>

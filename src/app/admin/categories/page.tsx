@@ -2,19 +2,27 @@ import { Trash2 } from "lucide-react";
 
 import { deleteCategoryAction, saveCategoryAction } from "@/app/actions/admin";
 import { AdminShell } from "@/components/admin/admin-shell";
-import { Button } from "@/components/ui/button";
+import { ConfirmDeleteButton } from "@/components/ui/confirm-delete-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { ToastMessage } from "@/components/ui/toast-message";
 import { getCategories } from "@/lib/admin-data";
 import { requireAdminUser } from "@/lib/auth";
 
-export default async function AdminCategoriesPage() {
+type AdminCategoriesPageProps = {
+  searchParams: Promise<{ error?: string; success?: string }>;
+};
+
+export default async function AdminCategoriesPage({ searchParams }: AdminCategoriesPageProps) {
   const { profile } = await requireAdminUser();
+  const params = await searchParams;
   const categories = await getCategories();
 
   return (
     <AdminShell profile={profile}>
       <div className="space-y-6">
+        <ToastMessage error={params.error} success={params.success} />
         <div>
           <h1 className="text-3xl font-semibold tracking-tight">Manajemen Kategori</h1>
           <p className="mt-2 text-muted-foreground">Tambah, edit, hapus, dan aktif/nonaktifkan kategori konten.</p>
@@ -45,7 +53,7 @@ export default async function AdminCategoriesPage() {
             <Label htmlFor="description">Deskripsi</Label>
             <Input id="description" name="description" />
           </div>
-          <Button type="submit" className="md:col-span-2 lg:col-span-6">Tambah Kategori</Button>
+          <SubmitButton type="submit" className="gap-2 md:col-span-2 lg:col-span-6" pendingChildren="Menambahkan...">Tambah Kategori</SubmitButton>
         </form>
 
         <div className="space-y-3">
@@ -61,14 +69,14 @@ export default async function AdminCategoriesPage() {
                 <input type="checkbox" name="is_active" defaultChecked={category.is_active} className="h-4 w-4 accent-primary" />
                 Aktif
               </label>
-              <Button type="submit" variant="outline">Simpan</Button>
-              <Button form={`delete-category-${category.id}`} type="submit" variant="outline" aria-label="Hapus kategori">
+              <SubmitButton type="submit" variant="outline" className="gap-2" pendingChildren="Menyimpan...">Simpan</SubmitButton>
+              <ConfirmDeleteButton form={`delete-category-${category.id}`} type="submit" variant="outline" aria-label="Hapus kategori" confirmMessage={`Apakah yakin ingin menghapus kategori "${category.name}"?`}>
                 <Trash2 className="h-4 w-4" />
-              </Button>
+              </ConfirmDeleteButton>
             </form>
           ))}
           {categories.map((category) => (
-            <form key={`delete-${category.id}`} id={`delete-category-${category.id}`} action={deleteCategoryAction}>
+            <form key={`delete-${category.id}`} id={`delete-category-${category.id}`} action={deleteCategoryAction} className="hidden">
               <input type="hidden" name="id" value={category.id} />
             </form>
           ))}
