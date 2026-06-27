@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 import { PostCard } from "@/components/public/post-card";
 import { PublicShell } from "@/components/public/site-shell";
 import { Badge } from "@/components/ui/badge";
@@ -7,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { contentTypeLabel, type ContentType } from "@/lib/dummy-content";
 import { getPublicPosts } from "@/lib/public-data";
+import { publicPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = publicPageMetadata({
   title: "Pencarian",
   description: "Cari tulisan berdasarkan judul, excerpt, dan isi konten.",
-};
+  path: "/search",
+});
 
 export const dynamic = "force-dynamic";
 

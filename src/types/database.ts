@@ -58,6 +58,7 @@ export type Database = {
           favicon_path: string | null;
           favicon_url: string | null;
           primary_color: string;
+          primary_color_history: string[];
           contact_email: string | null;
           contact_phone: string | null;
           whatsapp_url: string | null;
@@ -79,6 +80,7 @@ export type Database = {
           favicon_path?: string | null;
           favicon_url?: string | null;
           primary_color?: string;
+          primary_color_history?: string[];
           contact_email?: string | null;
           contact_phone?: string | null;
           whatsapp_url?: string | null;

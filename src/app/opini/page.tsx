@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-
 import { ListingPage } from "@/components/public/listing-page";
 import { getPublicPostsByType } from "@/lib/public-data";
+import { publicPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = publicPageMetadata({
   title: "Opini",
   description: "Opini keumatan, sosial, dakwah, dan refleksi aktual.",
-};
+  path: "/opini",
+});
 
 export const dynamic = "force-dynamic";
 

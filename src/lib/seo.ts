@@ -5,7 +5,11 @@ import { contentTypeLabel, contentTypePath, profile, site, type Book, type Post 
 export const defaultOgImage = "/opengraph-image";
 
 export function getSiteUrl() {
-  return (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+  const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
+  const vercelSiteUrl = vercelUrl ? (/^https?:\/\//i.test(vercelUrl) ? vercelUrl : `https://${vercelUrl}`) : null;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? vercelSiteUrl ?? "http://localhost:3000";
+
+  return siteUrl.replace(/\/$/, "");
 }
 
 export function absoluteUrl(pathOrUrl: string) {

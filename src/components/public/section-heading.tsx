@@ -18,7 +18,7 @@ export function SectionHeading({ eyebrow, title, description, href, actionLabel 
         {description ? <p className="leading-7 text-muted-foreground">{description}</p> : null}
       </div>
       {href ? (
-        <Link href={href} className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-teal-700">
+        <Link href={href} className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-slate-700">
           {actionLabel}
           <ArrowRight className="size-4" aria-hidden="true" />
         </Link>

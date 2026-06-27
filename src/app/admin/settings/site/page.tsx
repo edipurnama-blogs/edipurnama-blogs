@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { saveSiteSettingsAction } from "@/app/actions/admin";
 import { AdminShell } from "@/components/admin/admin-shell";
+import { PrimaryColorField } from "@/components/admin/primary-color-field";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,6 +28,7 @@ export default async function AdminSiteSettingsPage() {
           <input type="hidden" name="existing_logo_url" value={settings.logo_url ?? ""} />
           <input type="hidden" name="existing_favicon_path" value={settings.favicon_path ?? ""} />
           <input type="hidden" name="existing_favicon_url" value={settings.favicon_url ?? ""} />
+          <input type="hidden" name="primary_color_history" value={settings.primary_color_history.join(",")} />
 
           <section className="grid gap-6 rounded-lg border border-border bg-white p-5 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="space-y-4">
@@ -63,10 +65,7 @@ export default async function AdminSiteSettingsPage() {
           </section>
 
           <section className="grid gap-4 rounded-lg border border-border bg-white p-5 md:grid-cols-2 xl:grid-cols-3">
-            <div className="space-y-2">
-              <Label htmlFor="primary_color">Primary color</Label>
-              <Input id="primary_color" name="primary_color" defaultValue={settings.primary_color} placeholder="#14B8A6" />
-            </div>
+            <PrimaryColorField defaultColor={settings.primary_color} history={settings.primary_color_history} />
             <div className="space-y-2">
               <Label htmlFor="contact_email">Email kontak</Label>
               <Input id="contact_email" name="contact_email" type="email" defaultValue={settings.contact_email ?? ""} />

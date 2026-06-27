@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Heart } from "lucide-react";
 
 import { PublicNavbar } from "@/components/public/public-navbar";
 import { site as fallbackSite } from "@/lib/dummy-content";
@@ -38,12 +38,12 @@ export function PublicFooter({ site }: { site: Awaited<ReturnType<typeof getSite
         <div>
           <h2 className="mb-4 font-sans text-sm font-semibold text-foreground">Navigasi</h2>
           <div className="grid gap-3">
-            <Link href="/profil" className="text-sm text-muted-foreground hover:text-primary">Profil</Link>
-            <Link href="/blog" className="text-sm text-muted-foreground hover:text-primary">Blog</Link>
-            <Link href="/artikel" className="text-sm text-muted-foreground hover:text-primary">Artikel Islam</Link>
-            <Link href="/berita" className="text-sm text-muted-foreground hover:text-primary">Berita Umat</Link>
-            <Link href="/karya-buku" className="text-sm text-muted-foreground hover:text-primary">Karya Buku</Link>
-            <Link href="#kontak" className="text-sm text-muted-foreground hover:text-primary">Kontak</Link>
+            <Link href="/profil" className="text-sm text-muted-foreground hover:text-slate-700">Profil</Link>
+            <Link href="/blog" className="text-sm text-muted-foreground hover:text-slate-700">Blog</Link>
+            <Link href="/artikel" className="text-sm text-muted-foreground hover:text-slate-700">Artikel Islam</Link>
+            <Link href="/berita" className="text-sm text-muted-foreground hover:text-slate-700">Berita Umat</Link>
+            <Link href="/karya-buku" className="text-sm text-muted-foreground hover:text-slate-700">Karya Buku</Link>
+            <Link href="#kontak" className="text-sm text-muted-foreground hover:text-slate-700">Kontak</Link>
           </div>
         </div>
 
@@ -51,15 +51,25 @@ export function PublicFooter({ site }: { site: Awaited<ReturnType<typeof getSite
           <h2 className="mb-4 font-sans text-sm font-semibold text-foreground">Sosial Media</h2>
           <div className="grid gap-3">
             {(socials.length > 0 ? socials : fallbackSite.socials).map((item) => (
-              <a key={item.label} href={item.url} className="text-sm text-muted-foreground hover:text-primary" target="_blank" rel="noreferrer">
+              <a key={item.label} href={item.url} className="text-sm text-muted-foreground hover:text-slate-700" target="_blank" rel="noreferrer">
                 {item.label}
               </a>
             ))}
           </div>
         </div>
       </div>
-      <div className="border-t border-border py-5 text-center text-xs text-muted-foreground">
-        © 2026 {site.site_name}. Semua hak cipta dilindungi.
+      <div className="border-t border-border px-4 py-5 text-center text-xs text-muted-foreground">
+        © 2026 {site.site_name}. Semua hak cipta dilindungi. Dibuat dengan{" "}
+        <Heart className="inline size-3 fill-primary text-primary" aria-label="love" /> oleh{" "}
+        <a
+          href="http://azzamazhari.my.id/"
+          className="font-medium text-primary hover:underline"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Azzam Azhari
+        </a>
+        .
       </div>
     </footer>
   );

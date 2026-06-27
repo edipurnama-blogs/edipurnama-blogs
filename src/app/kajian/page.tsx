@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-
 import { ListingPage } from "@/components/public/listing-page";
 import { getPublicPostsByType } from "@/lib/public-data";
+import { publicPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = publicPageMetadata({
   title: "Kajian dan Tausiyah",
   description: "Ringkasan kajian, tausiyah, catatan ceramah, dan materi dakwah.",
-};
+  path: "/kajian",
+});
 
 export const dynamic = "force-dynamic";
 

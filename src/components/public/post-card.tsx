@@ -14,7 +14,7 @@ type PostCardProps = {
 export function PostCard({ post, compact = false }: PostCardProps) {
   return (
     <Link href={`/${contentTypePath(post.contentType)}/${post.slug}`} className="group block h-full">
-      <Card className="h-full overflow-hidden rounded-lg border-border bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md">
+      <Card className="h-full overflow-hidden rounded-lg border-border bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300/80 hover:shadow-md">
         <div className={compact ? "relative aspect-[16/9] overflow-hidden" : "relative aspect-[4/3] overflow-hidden"}>
           <Image
             src={post.coverImageUrl}
@@ -30,7 +30,7 @@ export function PostCard({ post, compact = false }: PostCardProps) {
             <span className="text-xs text-muted-foreground">{post.authorName}</span>
           </div>
           <div className="space-y-2">
-            <h3 className="font-sans text-lg font-semibold leading-snug text-foreground group-hover:text-primary">
+            <h3 className="font-sans text-lg font-semibold leading-snug text-foreground group-hover:text-slate-700">
               {post.title}
             </h3>
             <p className="line-clamp-3 text-sm leading-6 text-muted-foreground">{post.excerpt}</p>

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CalendarDays, Clock, Share2 } from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock } from "lucide-react";
 
 import { PostCard } from "@/components/public/post-card";
+import { ShareButton } from "@/components/public/share-button";
 import { PublicShell } from "@/components/public/site-shell";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   contentTypeLabel,
   contentTypePath,
@@ -91,10 +91,7 @@ export async function ContentDetailPage({ contentType, slug }: ContentDetailPage
             <aside className="space-y-5">
               <div className="rounded-lg border border-border bg-background p-5">
                 <h2 className="mb-3 font-sans text-sm font-semibold uppercase tracking-[0.16em] text-primary">Bagikan</h2>
-                <Button variant="outline" className="w-full">
-                  <Share2 className="mr-2 size-4" aria-hidden="true" />
-                  Share Artikel
-                </Button>
+                <ShareButton title={post.title} />
               </div>
             </aside>
           </div>

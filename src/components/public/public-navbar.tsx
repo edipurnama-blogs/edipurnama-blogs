@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { BookOpen, DoorOpen, Menu, Search, X } from "lucide-react";
+import { BookOpen, DoorOpen, FileText, Home, Mail, Menu, Newspaper, ScrollText, Search, UserRound, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -10,14 +10,14 @@ import { site as fallbackSite } from "@/lib/dummy-content";
 import type { SiteSettings } from "@/lib/site-settings";
 
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/profil", label: "Profil" },
-  { href: "/blog", label: "Blog" },
-  { href: "/artikel", label: "Artikel Islam" },
-  { href: "/berita", label: "Berita Umat" },
-  { href: "/kisah", label: "Kisah" },
-  { href: "/karya-buku", label: "Karya Buku" },
-  { href: "#kontak", label: "Kontak" },
+  { href: "/", label: "Home", icon: Home },
+  { href: "/profil", label: "Profil", icon: UserRound },
+  { href: "/blog", label: "Blog", icon: FileText },
+  { href: "/artikel", label: "Artikel Islam", icon: ScrollText },
+  { href: "/berita", label: "Berita Umat", icon: Newspaper },
+  { href: "/kisah", label: "Kisah", icon: BookOpen },
+  { href: "/karya-buku", label: "Karya Buku", icon: BookOpen },
+  { href: "#kontak", label: "Kontak", icon: Mail },
 ];
 
 function getSocialLabel(url: string) {
@@ -55,15 +55,17 @@ export function PublicNavbar({ site }: { site: SiteSettings }) {
         </Link>
 
         <div className="hidden items-center gap-1 lg:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-full px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-full px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="hidden items-center gap-2 lg:flex">
@@ -100,16 +102,21 @@ export function PublicNavbar({ site }: { site: SiteSettings }) {
       >
         <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6">
           <div className="grid gap-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium text-foreground hover:bg-accent"
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="inline-flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium text-foreground hover:bg-accent"
+                  onClick={() => setOpen(false)}
+                >
+                  <Icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
 
           <div className="mt-4 grid gap-2 rounded-xl border border-border bg-background p-3">

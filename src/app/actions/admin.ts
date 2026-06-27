@@ -104,6 +104,14 @@ async function uploadImageFromForm(formData: FormData, key: string, bucket: stri
   };
 }
 
+async function deleteStoredImage(bucket: string, filePath: string | null) {
+  if (!filePath) return;
+
+  const supabase = createAdminClient();
+  await supabase.storage.from(bucket).remove([filePath]);
+  await supabase.from("media_assets").delete().eq("bucket_name", bucket).eq("file_path", filePath);
+}
+
 export async function savePostAction(formData: FormData) {
   const { user } = await requireAdminUser();
   const supabase = createAdminClient();
@@ -118,6 +126,8 @@ export async function savePostAction(formData: FormData) {
 
   const content = stringValue(formData, "content") ?? "";
   const excerpt = stringValue(formData, "excerpt");
+  const existingCoverPath = stringValue(formData, "existing_cover_image_path");
+  const existingCoverUrl = stringValue(formData, "existing_cover_image_url");
   let upload: Awaited<ReturnType<typeof uploadImageFromForm>>;
   try {
     upload = await uploadImageFromForm(formData, "cover_image", "blog-images", "posts", user.id);
@@ -136,8 +146,8 @@ export async function savePostAction(formData: FormData) {
     slug,
     excerpt,
     content,
-    cover_image_path: upload?.path ?? stringValue(formData, "existing_cover_image_path"),
-    cover_image_url: upload?.publicUrl ?? stringValue(formData, "existing_cover_image_url"),
+    cover_image_path: upload?.path ?? existingCoverPath,
+    cover_image_url: upload?.publicUrl ?? existingCoverUrl,
     cover_image_alt: stringValue(formData, "cover_image_alt"),
     is_featured: boolValue(formData, "is_featured"),
     reading_time_minutes: readingTime(content),
@@ -151,6 +161,10 @@ export async function savePostAction(formData: FormData) {
     : await mutableTable(supabase, "posts").insert(payload);
 
   if (error) redirectWithError(formPath, error);
+
+  if (id && upload?.path) {
+    await deleteStoredImage("blog-images", existingCoverPath);
+  }
 
   revalidatePath("/admin/posts");
   revalidatePath("/admin/dashboard");
@@ -262,6 +276,8 @@ export async function saveBookAction(formData: FormData) {
   const title = stringValue(formData, "title");
   const slug = slugify(title ?? "");
   if (!title || !slug) throw new Error("Judul dan slug wajib diisi.");
+  const existingCoverPath = stringValue(formData, "existing_cover_image_path");
+  const existingCoverUrl = stringValue(formData, "existing_cover_image_url");
   const upload = await uploadImageFromForm(formData, "cover_image", "book-covers", "books", user.id);
   const description = stringValue(formData, "description");
 
@@ -271,8 +287,8 @@ export async function saveBookAction(formData: FormData) {
     slug,
     subtitle: stringValue(formData, "subtitle"),
     description,
-    cover_image_path: upload?.path ?? stringValue(formData, "existing_cover_image_path"),
-    cover_image_url: upload?.publicUrl ?? stringValue(formData, "existing_cover_image_url"),
+    cover_image_path: upload?.path ?? existingCoverPath,
+    cover_image_url: upload?.publicUrl ?? existingCoverUrl,
     cover_image_alt: stringValue(formData, "cover_image_alt"),
     publisher: stringValue(formData, "publisher"),
     published_year: numberValue(formData, "published_year"),
@@ -287,6 +303,10 @@ export async function saveBookAction(formData: FormData) {
   const { error } = id ? await mutableTable(supabase, "books").update(payload).eq("id", id) : await mutableTable(supabase, "books").insert(payload);
 
   if (error) throw new Error(error.message);
+
+  if (id && upload?.path) {
+    await deleteStoredImage("book-covers", existingCoverPath);
+  }
 
   revalidatePath("/admin/books");
   revalidatePath("/admin/dashboard");
@@ -335,6 +355,8 @@ export async function updateAccountAction(formData: FormData) {
   const { user } = await requireAdminUser();
   const supabase = createAdminClient();
   const password = stringValue(formData, "password");
+  const existingAvatarPath = stringValue(formData, "existing_avatar_path");
+  const existingAvatarUrl = stringValue(formData, "existing_avatar_url");
   let avatarUpload: Awaited<ReturnType<typeof uploadImageFromForm>> | null = null;
 
   try {
@@ -348,12 +370,16 @@ export async function updateAccountAction(formData: FormData) {
       username: stringValue(formData, "username"),
       display_name: stringValue(formData, "display_name"),
       bio: stringValue(formData, "bio"),
-      avatar_path: avatarUpload?.path ?? stringValue(formData, "existing_avatar_path"),
-      avatar_url: avatarUpload?.publicUrl ?? stringValue(formData, "existing_avatar_url"),
+      avatar_path: avatarUpload?.path ?? existingAvatarPath,
+      avatar_url: avatarUpload?.publicUrl ?? existingAvatarUrl,
     })
     .eq("id", user.id);
 
   if (error) throw new Error(error.message);
+
+  if (avatarUpload?.path) {
+    await deleteStoredImage("avatars", existingAvatarPath);
+  }
 
   if (password) {
     const userSupabase = await createClient();
@@ -369,6 +395,13 @@ function siteSettingsPayload(
   logoUpload: Awaited<ReturnType<typeof uploadImageFromForm>> | null,
   faviconUpload: Awaited<ReturnType<typeof uploadImageFromForm>> | null,
 ) {
+  const primaryColor = stringValue(formData, "primary_color") ?? "#14B8A6";
+  const previousHistory = stringValue(formData, "primary_color_history")
+    ?.split(",")
+    .map((color) => color.trim())
+    .filter(Boolean) ?? [];
+  const primaryColorHistory = Array.from(new Set([primaryColor, ...previousHistory])).slice(0, 12);
+
   return {
     site_name: stringValue(formData, "site_name") ?? "Blog Dai Islami",
     site_tagline: stringValue(formData, "site_tagline"),
@@ -377,7 +410,8 @@ function siteSettingsPayload(
     logo_url: logoUpload?.publicUrl ?? stringValue(formData, "existing_logo_url"),
     favicon_path: faviconUpload?.path ?? stringValue(formData, "existing_favicon_path"),
     favicon_url: faviconUpload?.publicUrl ?? stringValue(formData, "existing_favicon_url"),
-    primary_color: stringValue(formData, "primary_color") ?? "#14B8A6",
+    primary_color: primaryColor,
+    primary_color_history: primaryColorHistory,
     contact_email: stringValue(formData, "contact_email"),
     contact_phone: stringValue(formData, "contact_phone"),
     whatsapp_url: stringValue(formData, "whatsapp_url"),
@@ -389,12 +423,24 @@ function siteSettingsPayload(
   };
 }
 
+function isMissingPrimaryColorHistoryColumn(error: { message: string } | null) {
+  return Boolean(error?.message.includes("primary_color_history") && error.message.includes("schema cache"));
+}
+
+function omitPrimaryColorHistory<T extends { primary_color_history?: string[] }>(payload: T) {
+  const compatiblePayload = { ...payload };
+  delete compatiblePayload.primary_color_history;
+  return compatiblePayload;
+}
+
 export async function saveSiteSettingsAction(formData: FormData) {
   const { user } = await requireAdminUser();
   const supabase = createAdminClient();
   const id = stringValue(formData, "id");
   let logoUpload: Awaited<ReturnType<typeof uploadImageFromForm>> | null = null;
   let faviconUpload: Awaited<ReturnType<typeof uploadImageFromForm>> | null = null;
+  const existingLogoPath = stringValue(formData, "existing_logo_path");
+  const existingFaviconPath = stringValue(formData, "existing_favicon_path");
 
   try {
     logoUpload = await uploadImageFromForm(formData, "logo", "blog-images", "site", user.id);
@@ -405,11 +451,28 @@ export async function saveSiteSettingsAction(formData: FormData) {
 
   const payload = siteSettingsPayload(formData, logoUpload, faviconUpload);
 
-  const { error } = id
+  let { error } = id
     ? await mutableTable(supabase, "site_settings").update(payload).eq("id", id)
     : await mutableTable(supabase, "site_settings").insert(payload);
 
+  if (isMissingPrimaryColorHistoryColumn(error)) {
+    const compatiblePayload = omitPrimaryColorHistory(payload);
+    const retry = id
+      ? await mutableTable(supabase, "site_settings").update(compatiblePayload).eq("id", id)
+      : await mutableTable(supabase, "site_settings").insert(compatiblePayload);
+
+    error = retry.error;
+  }
+
   if (error) throw new Error(error.message);
+
+  if (logoUpload?.path) {
+    await deleteStoredImage("blog-images", existingLogoPath);
+  }
+
+  if (faviconUpload?.path) {
+    await deleteStoredImage("blog-images", existingFaviconPath);
+  }
 
   revalidatePath("/admin/settings/site");
   revalidatePath("/");

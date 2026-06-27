@@ -8,7 +8,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "bg-primary text-primary-foreground hover:bg-slate-200/60 hover:text-foreground",
         outline: "border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground",
         ghost: "text-foreground hover:bg-accent hover:text-accent-foreground",
       },
@@ -37,6 +37,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       const child = children as React.ReactElement<{ className?: string }>;
 
       return React.cloneElement(child, {
+        ...props,
         className: cn(buttonVariants({ variant, size, className }), child.props.className),
       });
     }

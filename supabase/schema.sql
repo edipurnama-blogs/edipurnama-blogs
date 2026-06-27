@@ -175,6 +175,7 @@ create table if not exists public.site_settings (
   favicon_path text,
   favicon_url text,
   primary_color text not null default '#14B8A6',
+  primary_color_history text[] not null default array['#14B8A6']::text[],
   contact_email text,
   contact_phone text,
   whatsapp_url text,
@@ -210,12 +211,14 @@ insert into public.site_settings (
   site_name,
   site_tagline,
   site_description,
-  primary_color
+  primary_color,
+  primary_color_history
 ) values (
   'Blog Dai Islami',
   'Catatan dakwah, ilmu, dan karya tulis Islami',
   'Website personal dai untuk mendokumentasikan blog harian, artikel Islam, berita umat, kajian, dan karya buku.',
-  '#14B8A6'
+  '#14B8A6',
+  array['#14B8A6']::text[]
 )
 on conflict do nothing;
 

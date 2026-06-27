@@ -1,15 +1,17 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 
 import { PublicShell } from "@/components/public/site-shell";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { profile } from "@/lib/dummy-content";
+import { publicPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = publicPageMetadata({
   title: "Profil",
   description: "Profil dai, fokus kajian, aktivitas dakwah, dan karya utama.",
-};
+  path: "/profil",
+  image: profile.avatarUrl,
+});
 
 export default function ProfilePage() {
   return (

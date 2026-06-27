@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import { absoluteUrl, getSiteUrl } from "@/lib/seo";
+import { getSiteSettings } from "@/lib/admin-data";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -40,14 +42,37 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+function normalizeHexColor(color: string | null | undefined) {
+  return /^#[0-9a-f]{6}$/i.test(color ?? "") ? color as string : "#14B8A6";
+}
+
+function readableForeground(hexColor: string) {
+  const red = Number.parseInt(hexColor.slice(1, 3), 16);
+  const green = Number.parseInt(hexColor.slice(3, 5), 16);
+  const blue = Number.parseInt(hexColor.slice(5, 7), 16);
+  const luminance = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
+
+  return luminance > 0.62 ? "#0f172a" : "#f8fffe";
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const site = await getSiteSettings();
+  const primaryColor = normalizeHexColor(site.primary_color);
+  const themeVars = {
+    "--primary": primaryColor,
+    "--ring": primaryColor,
+    "--primary-foreground": readableForeground(primaryColor),
+  } as CSSProperties;
+
   return (
     <html lang="id" className={`${plusJakartaSans.variable} ${playfairDisplay.variable} h-full`}>
-      <body className="min-h-full bg-background font-sans text-foreground antialiased">{children}</body>
+      <body className="min-h-full bg-background font-sans text-foreground antialiased" style={themeVars}>
+        {children}
+      </body>
     </html>
   );
 }

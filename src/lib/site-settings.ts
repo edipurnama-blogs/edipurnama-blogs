@@ -10,6 +10,7 @@ export type SiteSettings = {
   favicon_path: string | null;
   favicon_url: string | null;
   primary_color: string;
+  primary_color_history: string[];
   contact_email: string | null;
   contact_phone: string | null;
   whatsapp_url: string | null;
@@ -33,6 +34,7 @@ export function fallbackSiteSettings(): SiteSettings {
     favicon_path: null,
     favicon_url: null,
     primary_color: "#14B8A6",
+    primary_color_history: ["#14B8A6"],
     contact_email: fallbackSite.email,
     contact_phone: fallbackSite.phone,
     whatsapp_url: fallbackSite.socials.find((item) => item.label === "WhatsApp")?.url ?? null,

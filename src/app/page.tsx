@@ -21,13 +21,14 @@ import { getPublicBooks, getPublicFeaturedPosts, getPublicPosts, getPublicPostsB
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [site, latestPosts, featuredPosts, dailyBlogs, articles, news, books] = await Promise.all([
+  const [site, latestPosts, featuredPosts, dailyBlogs, articles, news, kajianPosts, books] = await Promise.all([
     getSiteSettings(),
     getPublicPosts(),
     getPublicFeaturedPosts(3),
     getPublicPostsByType("daily_blog"),
     getPublicPostsByType("islamic_article"),
     getPublicPostsByType("news"),
+    getPublicPostsByType("tausiyah"),
     getPublicBooks(),
   ]);
 
@@ -152,7 +153,7 @@ export default async function Home() {
               eyebrow="Pilihan"
               title="Kajian dan Tausiyah"
               description="Ringkasan materi kajian dan nasihat singkat yang mudah dibaca ulang."
-              href={`/kajian/${featuredPosts[0]?.slug ?? ""}`}
+              href={kajianPosts[0] ? `/kajian/${kajianPosts[0].slug}` : "/kajian"}
               actionLabel="Buka kajian"
             />
             <div className="grid gap-5 md:grid-cols-3">

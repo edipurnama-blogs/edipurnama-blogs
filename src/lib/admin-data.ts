@@ -164,7 +164,15 @@ export async function getSiteSettings() {
   const supabase = createAdminClient();
   const { data, error } = await supabase.from("site_settings").select("*").order("created_at", { ascending: false }).limit(1).maybeSingle();
 
-  if (!error && data) return data as SiteSettingsRow;
+  if (!error && data) {
+    const settings = data as SiteSettingsRow;
+    return {
+      ...settings,
+      primary_color_history: Array.isArray(settings.primary_color_history) && settings.primary_color_history.length > 0
+        ? settings.primary_color_history
+        : [settings.primary_color],
+    } satisfies SiteSettingsRow;
+  }
 
   return fallbackSiteSettings();
 }

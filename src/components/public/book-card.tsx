@@ -9,7 +9,7 @@ import type { Book } from "@/lib/dummy-content";
 export function BookCard({ book }: { book: Book }) {
   return (
     <Link href={`/karya-buku/${book.slug}`} className="group block h-full">
-      <Card className="grid h-full grid-cols-[110px_1fr] overflow-hidden rounded-lg border-border bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md sm:grid-cols-[140px_1fr]">
+      <Card className="grid h-full grid-cols-[110px_1fr] overflow-hidden rounded-lg border-border bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300/80 hover:shadow-md sm:grid-cols-[140px_1fr]">
         <div className="relative h-full min-h-52 overflow-hidden bg-secondary">
           <Image
             src={book.coverImageUrl}
@@ -25,7 +25,7 @@ export function BookCard({ book }: { book: Book }) {
               {book.status === "coming_soon" ? "Segera Terbit" : "Terbit"}
             </Badge>
             <div className="space-y-1">
-              <h3 className="font-sans text-lg font-semibold leading-snug group-hover:text-primary">{book.title}</h3>
+              <h3 className="font-sans text-lg font-semibold leading-snug group-hover:text-slate-700">{book.title}</h3>
               <p className="text-sm leading-6 text-muted-foreground">{book.subtitle}</p>
             </div>
             <p className="line-clamp-3 text-sm leading-6 text-muted-foreground">{book.description}</p>

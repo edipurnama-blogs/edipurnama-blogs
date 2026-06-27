@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-
 import { BookCard } from "@/components/public/book-card";
 import { PublicShell } from "@/components/public/site-shell";
 import { Badge } from "@/components/ui/badge";
 import { getPublicBooks } from "@/lib/public-data";
+import { publicPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = publicPageMetadata({
   title: "Karya Buku",
   description: "Daftar buku dan karya tulis dai.",
-};
+  path: "/karya-buku",
+});
 
 export const dynamic = "force-dynamic";
 

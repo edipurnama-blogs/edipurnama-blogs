@@ -129,7 +129,7 @@ export function ListingPage({ basePath, eyebrow, title, description, posts, sear
             <div className="flex items-center gap-2">
               <button
                 type="submit"
-                className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-slate-200/60 hover:text-foreground"
               >
                 Terapkan
               </button>

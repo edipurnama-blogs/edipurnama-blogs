@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { loginAction } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -24,7 +24,7 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
     <main className="flex min-h-screen items-center justify-center px-6 py-16">
       <Card className="w-full max-w-md border-primary/15 shadow-xl shadow-primary/5">
         <CardHeader>
-          <CardTitle>Login Admin</CardTitle>
+          <h1 className="text-xl font-semibold leading-none tracking-tight">Login Admin</h1>
           <CardDescription>Masuk menggunakan email dan password Supabase Auth.</CardDescription>
         </CardHeader>
         <CardContent>
